@@ -14,7 +14,7 @@ public class Tablero {
     private Casilla carcel;
     public Tablero()
     {
-        casillas = new ArrayList;
+        casillas = new ArrayList();
         //carcel.
     }
     

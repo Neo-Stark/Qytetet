@@ -66,14 +66,14 @@ public class Casilla {
     }
 
     public String toString (){
-        if (tipo = TipoCasilla.CALLE )  {
+        if (TipoCasilla.CALLE == tipo )  
             return "Numero de casilla" + numeroCasilla +", Coste del inmueble " + coste + 
                     ", numero de hoteles " + numHoteles + ", numero de casas " + numCasas
                     + titulo.toString() + "tipo de casilla" + tipo;
-        }else {return "Numero de casilla" + numeroCasilla +", Coste del inmueble " + coste + 
+        else 
+            return "Numero de casilla" + numeroCasilla +", Coste del inmueble " + coste + 
                     ", numero de hoteles " + numHoteles + ", numero de casas " + numCasas
-                    + titulo.toString() + "tipo de casilla" + tipo;
-        }
+                    + titulo.toString() + "tipo de casilla" + tipo;      
     }   
 }
    
