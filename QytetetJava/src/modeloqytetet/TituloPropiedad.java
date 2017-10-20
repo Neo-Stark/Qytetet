@@ -25,6 +25,10 @@ public class TituloPropiedad {
         this.hipotecaBase = hipotecaBase;
         this.precioEdificar = precioEdificar;
     }
+
+    TituloPropiedad(String calle_Cordoba, boolean b, int i, double d, int i0, int i1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public String getCalle()
     {
         return calle;
