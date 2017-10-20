@@ -10,24 +10,24 @@ package modeloqytetet;
  * @author fran98
  */
 public class TituloPropiedad {
-    private String calle;
+    private String nombre;
     private Boolean hipotecada;
     private int alquilerBase; 
     private float factorRevalorizado;
     private int hipotecaBase;
     private int precioEdificar;
 
-    public TituloPropiedad(String calle, int alquilerBase, float factorRevalorizado, int hipotecaBase, int precioEdificar) {
-        this.calle = calle;
+    public TituloPropiedad(String nombre, int alquilerBase, float factorRevalorizado, int hipotecaBase, int precioEdificar) {
+        this.nombre = nombre;
         this.hipotecada = false;
         this.alquilerBase = alquilerBase;
         this.factorRevalorizado = factorRevalorizado;
         this.hipotecaBase = hipotecaBase;
         this.precioEdificar = precioEdificar;
     }
-    public String getCalle()
+    public String getNombre()
     {
-        return calle;
+        return nombre;
     }
     public Boolean getHipotecada()
     {
@@ -56,7 +56,7 @@ public class TituloPropiedad {
     @Override
     public String toString()
     {
-        return "Titulo propiedad{calle=" + calle + ", hipotecada=" + hipotecada 
+        return "Titulo propiedad{nombre=" + nombre + ", hipotecada=" + hipotecada 
                 + ", alquiler base= " + alquilerBase + " factor revalorizado="
                 + factorRevalorizado + ", hipoteca base" + hipotecaBase
                 + ", precio edificar=" + precioEdificar + "}";

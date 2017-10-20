@@ -60,7 +60,7 @@ public class Casilla {
     public void setnumCasas (int x){       //Modificador
         numCasas = x;
     }
-    private void settitulo(TituloPropiedad x){
+    private void setTitulo(TituloPropiedad x){
         titulo = x ;
         
     }
