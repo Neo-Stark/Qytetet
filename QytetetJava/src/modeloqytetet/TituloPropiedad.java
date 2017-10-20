@@ -12,7 +12,7 @@ package modeloqytetet;
 public class TituloPropiedad {
     private String nombre;
     private Boolean hipotecada;
-    private int alquilerBase; 
+    private int alquilerBase;
     private float factorRevalorizado;
     private int hipotecaBase;
     private int precioEdificar;
