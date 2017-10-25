@@ -13,15 +13,15 @@ public class TituloPropiedad {
     private String nombre;
     private Boolean hipotecada;
     private int alquilerBase;
-    private float factorRevalorizado;
+    private float factorRevalorizacion;
     private int hipotecaBase;
     private int precioEdificar;
 
-    public TituloPropiedad(String nombre, int alquilerBase, float factorRevalorizado, int hipotecaBase, int precioEdificar) {
+    public TituloPropiedad(String nombre, int alquilerBase, float factorRevalorizacion, int hipotecaBase, int precioEdificar) {
         this.nombre = nombre;
         this.hipotecada = false;
         this.alquilerBase = alquilerBase;
-        this.factorRevalorizado = factorRevalorizado;
+        this.factorRevalorizacion = factorRevalorizacion;
         this.hipotecaBase = hipotecaBase;
         this.precioEdificar = precioEdificar;
     }
@@ -37,9 +37,9 @@ public class TituloPropiedad {
     {
         return alquilerBase;
     }
-    public float getFactorRevalorizado()
+    public float getFactorRevalorizacion()
     {
-        return factorRevalorizado;
+        return factorRevalorizacion;
     }
     public int getHipoteca()
     {
@@ -58,7 +58,7 @@ public class TituloPropiedad {
     {
         return "Titulo propiedad{nombre=" + nombre + ", hipotecada=" + hipotecada 
                 + ", alquiler base= " + alquilerBase + " factor revalorizado="
-                + factorRevalorizado + ", hipoteca base" + hipotecaBase
+                + factorRevalorizacion + ", hipoteca base" + hipotecaBase
                 + ", precio edificar=" + precioEdificar + "}";
     }
     

@@ -18,9 +18,9 @@ public class PruebaQytetet {
     private static void inicializarSorpresas()
     {
         mazo.add(new Sorpresa ("Te hemos pillado hackeando los servidores de la UGR,"
-                + " vas directamente a la carcel", 9, TipoSorpresa.IRACASILLA));
+                + " vas directamente a la carcel", 15, TipoSorpresa.IRACASILLA));
         mazo.add(new Sorpresa ("Has ganado un viaje a un spa con todos los gastos pagados"
-                + " vas a la casilla 5", 5, TipoSorpresa.IRACASILLA));
+                + " en la calle Recogidas", 5, TipoSorpresa.IRACASILLA));
         mazo.add(new Sorpresa ("Se han limpiado tus delitos de la base de datos de la policia."
                 + " Sales de la cárcel", 0, TipoSorpresa.SALIRCARCEL));
     }

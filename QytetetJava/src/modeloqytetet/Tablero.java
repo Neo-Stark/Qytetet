@@ -35,22 +35,22 @@ public class Tablero {
                 new TituloPropiedad("Calle Reyes Catolicos", 100, 17.3f, 400, 600)));
         casillas.add(new Casilla(10, 0, TipoCasilla.PARKING));
         casillas.add(new Casilla(11, 450, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Gran vía", 87, 8.7f, 0, 250)));
+                new TituloPropiedad("Calle Gran vía", 87, 8.7f, 800, 550)));
         casillas.add(new Casilla(12, 0, TipoCasilla.SORPRESA));
         casillas.add(new Casilla(13, 500, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Camino de Ronda ", 55, 10.1f, 0, 500)));
+                new TituloPropiedad("Calle Camino de Ronda ", 55, 1.1f, 750, 500)));
         casillas.add(new Casilla(14, 600, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Elvira", 100, 12.2f, 350, 700)));
+                new TituloPropiedad("Calle Elvira", 65, 0.2f, 350, 500)));
         casillas.add(new Casilla(15, 0, TipoCasilla.CARCEL));
         casillas.add(new Casilla(16, 650, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Fuente Nueva", 100, 19.8f, 800, 750)));
+                new TituloPropiedad("Calle Fuente Nueva", 75, 0.5f, 800, 650)));
         casillas.add(new Casilla(17, 0, TipoCasilla.SORPRESA));
         casillas.add(new Casilla(18, 750, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Carrera del Darro", 53, 10.0f, 0, 300)));
+                new TituloPropiedad("Calle Carrera del Darro", 90, 1.5f, 900, 700)));
         casillas.add(new Casilla(19, 300, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Recogidas", 50, 15.2f, 0, 1000)));
+                new TituloPropiedad("Calle Recogidas", 100, 2f, 1000, 750)));
         
-        carcel = casillas.get(2);
+        carcel = casillas.get(15);
     }
 
     @Override
