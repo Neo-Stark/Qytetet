@@ -4,6 +4,7 @@
 
 module ModeloQytetet
   require 'Singleton'
+  require_relative 'tablero'
   class Qytetet
     include Singleton
       @@MAX_JUGADORES = 4
@@ -16,7 +17,7 @@ module ModeloQytetet
       @mazo
       @jugador_actual = nil
       @jugadores = Array.new
-      @tablero
+      inicializar_tablero
       @dado
     end
     def aplicar_sorpresa
@@ -62,10 +63,25 @@ module ModeloQytetet
       
     end
     def inicializar_cartas_sorpresa
-      
+      @@mazo<< Sorpresa.new("Se han limpiado tus delitos de la base de datos de la policia. Sales de la cárcel",
+        0, TipoSorpresa::SALIRCARCEL)
+      @@mazo<< Sorpresa.new("Te hemos pillado hackeando los servidores de la UGR, vas directamente a la carcel",
+        @tablero.carcel.numero_casilla, TipoSorpresa::IRACASILLA )
+      @@mazo<< Sorpresa.new("Has ganado un viaje un viaje a Las Vegas, pero lo vendes porque prefieres seguir programando",
+        800, TipoSorpresa::PAGARCOBRAR )
+      @@mazo<< Sorpresa.new("Decides ir de compras, vas en metro a Recogidas", 19, TipoSorpresa::IRACASILLA)
+      @@mazo<< Sorpresa.new("Un huracán ha arrasado con todos tus hoteles, pagas 300 por cada casa y hotel.", 100, TipoSorpresa::PORCASAHOTEL)
+      @@mazo<< Sorpresa.new("Un magnate del petroleo ha decidido invertir en tus propiedades,\
+        obtienes 400 por cada casa y hotel", 400, TipoSorpresa::PORCASAHOTEL)
+      @@mazo<< Sorpresa.new("Decides regalar un año de suscripción de Netflix a cada jugador, \
+        pagas 150 por cada jugador", 150, TipoSorpresa::PORJUGADOR)
+      @@mazo<< Sorpresa.new("Has aprobado la carrera, cada jugador te da 200 por \
+        tu gran hazaña", 200, TipoSorpresa::PORJUGADOR)
+      @@mazo<< Sorpresa.new("Tienes ganas de salir de fiesta, vas a Pedro Antonio", 8, TipoSorpresa::IRACASILLA)
+      @@mazo<< Sorpresa.new("Anoche te pasaste con la juerga, te has dejado 750 en una noche", 750, TipoSorpresa::PAGARCOBRAR)
     end
     def inicializar_jugadores(nombres)
-      
+      nombres.each { |nombre| @jugadores<<Jugador.new(nombre, @tablero.obtener_casilla_numero(0))  }
     end
     def inicializar_tablero
       @tablero.inicializar

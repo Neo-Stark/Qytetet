@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package modeloqytetet;
+
 import java.util.ArrayList;
 
 public class Tablero {
@@ -49,17 +50,29 @@ public class Tablero {
                 new TituloPropiedad("Calle Carrera del Darro", 90, 1.5f, 900, 700)));
         casillas.add(new Casilla(19, 300, TipoCasilla.CALLE,
                 new TituloPropiedad("Calle Recogidas", 100, 2f, 1000, 750)));
-        
+
         carcel = casillas.get(15);
+    }
+
+    Casilla obtenerCasillaNumero(int numeroCasilla) {
+        return casillas.get(numeroCasilla);
+    }
+
+    Casilla obtenerNuevaCasilla(Casilla casilla, int desplazamiento) {
+
+    }
+
+    Casilla getCarcel() {
+        return carcel;
     }
 
     @Override
     public String toString() {
         String tablero = "";
         for (Casilla c : casillas) {
-            tablero += c.toString();
+            tablero += c.toString() + '\n';
         }
-        return "Tablero{" + "casillas=" + casillas + ", carcel=" + carcel + tablero + '}';
+        return "Tablero{" + "casillas=" + casillas.size() + ", carcel=" + carcel + '\n' + tablero + '}';
     }
 
 }

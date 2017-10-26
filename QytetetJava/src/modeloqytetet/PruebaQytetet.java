@@ -13,19 +13,10 @@ import java.util.ArrayList;
  * @author fran98
  */
 public class PruebaQytetet {
-    private static ArrayList<Sorpresa> mazo = new ArrayList();
-    
-    private static void inicializarSorpresas()
-    {
-        mazo.add(new Sorpresa ("Te hemos pillado hackeando los servidores de la UGR,"
-                + " vas directamente a la carcel", 15, TipoSorpresa.IRACASILLA));
-        mazo.add(new Sorpresa ("Has ganado un viaje a un spa con todos los gastos pagados"
-                + " en la calle Recogidas", 5, TipoSorpresa.IRACASILLA));
-        mazo.add(new Sorpresa ("Se han limpiado tus delitos de la base de datos de la policia."
-                + " Sales de la cárcel", 0, TipoSorpresa.SALIRCARCEL));
-    }
     public static void main(String[] args) {
-        PruebaQytetet.inicializarSorpresas();
+        String[] nombres = {"Fran","Jose"};
+        Qytetet juego = new Qytetet(nombres);
+        System.out.println(juego.tablero.toString());
         for ( Sorpresa s : mazo)
         {
             System.out.println(s.toString());

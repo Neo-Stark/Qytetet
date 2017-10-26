@@ -16,6 +16,8 @@ public class TituloPropiedad {
     private float factorRevalorizacion;
     private int hipotecaBase;
     private int precioEdificar;
+    private Jugador propietario;
+    private Casilla casilla;
 
     public TituloPropiedad(String nombre, int alquilerBase, float factorRevalorizacion, int hipotecaBase, int precioEdificar) {
         this.nombre = nombre;
@@ -24,35 +26,53 @@ public class TituloPropiedad {
         this.factorRevalorizacion = factorRevalorizacion;
         this.hipotecaBase = hipotecaBase;
         this.precioEdificar = precioEdificar;
+        this.propietario = null;
+        this.casilla = null;
     }
-    public String getNombre()
-    {
+
+     String getNombre() {
         return nombre;
     }
-    public Boolean getHipotecada()
-    {
+
+     Boolean getHipotecada() {
         return hipotecada;
     }
-    public int getAlquiler()
-    {
-        return alquilerBase;
-    }
-    public float getFactorRevalorizacion()
-    {
-        return factorRevalorizacion;
-    }
-    public int getHipoteca()
-    {
-        return hipotecaBase;
-    }
-    public int getPrecioEdificar()
-    {
-        return precioEdificar;
-    }
-    public void setHipotecada(Boolean hipotecada)
-    {
+
+     void setHipotecada(Boolean hipotecada) {
         this.hipotecada = hipotecada;
     }
+
+     int getAlquilerBase() {
+        return alquilerBase;
+    }
+
+     float getFactorRevalorizacion() {
+        return factorRevalorizacion;
+    }
+
+     int getHipotecaBase() {
+        return hipotecaBase;
+    }
+
+     int getPrecioEdificar() {
+        return precioEdificar;
+    }
+     void setPropietario(Jugador propietario){
+         
+     }
+     void cobrarAlquiler(int coste) {
+         
+     }
+     boolean propietarioEncarcelado() {
+         
+     }
+     boolean tengoPropietario() { 
+         
+     }
+     
+     void setCasilla(Casilla casilla) {
+         this.casilla = casilla;
+     }
     @Override
     public String toString()
     {

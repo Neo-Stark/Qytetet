@@ -6,12 +6,12 @@ module ModeloQytetet
   class Jugador
     attr_accessor :casilla_actual, :encarcelado
     attr_writer :carta_libertad
-    def initialize (nombre)
+    def initialize (nombre, casilla)
       @encarcelado = false
       @nombre = nombre
       @saldo = 7500
-      @casilla_actual 
-      @carta_libertad
+      @casilla_actual = casilla
+      @carta_libertad = nil
       @propiedades = Array.new
     end
     def tengo_propiedades
