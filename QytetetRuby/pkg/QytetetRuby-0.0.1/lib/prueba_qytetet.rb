@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #encoding: UTF-8
 module ModeloQytetet
   require_relative "sorpresa"
@@ -7,17 +8,6 @@ module ModeloQytetet
   require_relative "inspector"
   require_relative "qytetet"
   class PruebaQytetet
-    @@mazo = Array.new
-    
-    def self.inicializar_sorpresas
-      @@mazo<< Sorpresa.new("Se han limpiado tus delitos de la base de datos de la policia. Sales de la cárcel",
-        0, TipoSorpresa::SALIRCARCEL)
-      @@mazo<< Sorpresa.new("Te hemos pillado hackeando los servidores de la UGR, vas directamente a la carcel",
-        9, TipoSorpresa::IRACASILLA )
-      @@mazo<< Sorpresa.new("Has ganado un viaje un viaje a Las Vegas, pero lo vendes porque prefieres seguir programando",
-        800, TipoSorpresa::PAGARCOBRAR )
-      @@mazo<< Sorpresa.new("Decides ir de compras, vas en metro a Recogidas", 19, TipoSorpresa::IRACASILLA)
-    end
     private
     def self.get_sorpresa(tipo_sorpresa)
       m = Array.new

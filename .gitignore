@@ -1,4 +1,4 @@
 *.ini
-/QytetetJava/build/
+QytetetJava/build/
 *.xml
 *.class

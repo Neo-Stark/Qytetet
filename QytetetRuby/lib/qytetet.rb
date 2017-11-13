@@ -14,6 +14,7 @@ module ModeloQytetet
     @@PRECIO_LIBERTAD = 200
     @@SALDO_SALIDA = 1000
     attr_reader :carta_actual, :jugador_actual, :tablero, :jugadores
+
     def initialize
       @carta_actual = nil
       @mazo = Array.new
@@ -22,6 +23,7 @@ module ModeloQytetet
       @dado = nil
       @tablero = nil
     end
+    
     def aplicar_sorpresa
       
     end
@@ -86,27 +88,30 @@ module ModeloQytetet
       @mazo<< Sorpresa.new("Tienes ganas de salir de fiesta, vas a Pedro Antonio", 8, TipoSorpresa::IRACASILLA)
       @mazo<< Sorpresa.new("Anoche te pasaste con la juerga, te has dejado 750 en una noche", 750, TipoSorpresa::PAGARCOBRAR)
     end
-    def inicializar_jugadores(nombres)
-      
+    
+    def inicializar_jugadores(nombres)      
       nombres.each { |nombre| @jugadores<<Jugador.new(nombre)  }
     end
+    
     def inicializar_tablero
       @tablero = Tablero.new
     end
+    
     def salida_jugadores
-      @jugadores.each {|jugador| jugador.actualizar_posicion(@tablero.obtener_casilla_numero(0)) 
-        jugador.modicar_saldo(7500)
+      @jugadores.each {|jugador| jugador.actualizar_posicion(@tablero.obtener_casilla_numero(0))\
+        && jugador.modicar_saldo(7500)
       }
-      @jugador_actual = @jugadores.choice
+      @jugador_actual = @jugadores.sample
     end
     
     def inicializar_juego (nombres)
       raise ArgumentError, 'Numero de jugadores incorrecto' unless nombres.count >= 2 \
                                                                 && nombres.count <= 4
       inicializar_jugadores(nombres)
-      inicializar_cartas_sorpresa
       inicializar_tablero
+      inicializar_cartas_sorpresa
       salida_jugadores
     end
+    
   end
 end   

@@ -18,7 +18,11 @@ public class Qytetet {
     private Jugador jugadorActual;
     private Tablero tablero;
 
+<<<<<<< HEAD
     private Qytetet() {
+=======
+    private Qytetet(String[] nombres) {
+>>>>>>> d79725914e860936bf5acec09055bea8927959dd
         inicializarTablero();
         inicializarCartasSorpresa();
         inicializarJugadores(nombres);
@@ -66,6 +70,7 @@ public class Qytetet {
         return instance;
     }
 
+<<<<<<< HEAD
     public void inicicializarJuego(String[] nombres)
     {
         inicializarJugadores(nombres);
@@ -73,4 +78,6 @@ public class Qytetet {
         inicializarTablero();
         salidaJugadores();
     }
+=======
+>>>>>>> d79725914e860936bf5acec09055bea8927959dd
 }

@@ -7,17 +7,6 @@ module ModeloQytetet
   require_relative "inspector"
   require_relative "qytetet"
   class PruebaQytetet
-    @@mazo = Array.new
-    
-    def self.inicializar_sorpresas
-      @@mazo<< Sorpresa.new("Se han limpiado tus delitos de la base de datos de la policia. Sales de la cárcel",
-        0, TipoSorpresa::SALIRCARCEL)
-      @@mazo<< Sorpresa.new("Te hemos pillado hackeando los servidores de la UGR, vas directamente a la carcel",
-        9, TipoSorpresa::IRACASILLA )
-      @@mazo<< Sorpresa.new("Has ganado un viaje un viaje a Las Vegas, pero lo vendes porque prefieres seguir programando",
-        800, TipoSorpresa::PAGARCOBRAR )
-      @@mazo<< Sorpresa.new("Decides ir de compras, vas en metro a Recogidas", 19, TipoSorpresa::IRACASILLA)
-    end
     private
     def self.get_sorpresa(tipo_sorpresa)
       m = Array.new
@@ -39,7 +28,7 @@ module ModeloQytetet
     end
     def self.mayor_que_0()
       s = Array.new
-#      @@mazo.each { |m| s << m.valor>0 }
+      #@@mazo.each { |m|  m.valor?>0  s << m }
       #      m = Array.new
       #      for elemento in @@mazo
       #        if(elemento.valor > 0)
@@ -48,12 +37,14 @@ module ModeloQytetet
       #      end
       return s
     end
-#EXAMEN-inicio
+    #EXAMEN-inicio
     public
     def self.main()
       juego = Qytetet.instance
+      nombres = %w(fran pepe)  
+      juego.inicializar_juego(nombres)
       tablero = juego.tablero
-      puts tablero
+      puts juego.jugador_actual.nombre
       inspector = Inspector.crear_inspector_codigo("Fran", 1)
       inspector.asignar_casilla(juego.tablero.obtener_casilla_numero(6))  #La casilla 5 no es de tipo calle
       inspector.asignar_casilla(juego.tablero.obtener_casilla_numero(8))
@@ -61,6 +52,6 @@ module ModeloQytetet
       Inspector.imprimir_manual
     end
   end
- PruebaQytetet.main
+  PruebaQytetet.main
 end
 #EXAMEN-fin
