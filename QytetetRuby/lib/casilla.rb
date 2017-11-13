@@ -33,7 +33,7 @@ module ModeloQytetet
           +"numero casas = #{@num_casas}, tipo = #{@tipo}}\n "\
           + @titulo.to_s
       else
-        "Casilla{ numero= #{@numero_casilla}, coste= #{@coste}, tipo = #{@tipo}}\n "        
+        "Casilla{ numero= #{@numero_casilla}, coste= #{@coste}, tipo = #{@tipo}}\n\n"        
       end
     end
     def asignar_propietario(jugador)
@@ -84,7 +84,7 @@ module ModeloQytetet
       @num_hoteles < 4 && @num_casas == 4
     end
     def soy_edificable
-      se_puede_edificar_casa && se_puede_edificar_hotel
+      @tipo.eql?(TipoCasilla::CALLE)
     end
     def tengo_propietario
       @titulo.tengo_propietario

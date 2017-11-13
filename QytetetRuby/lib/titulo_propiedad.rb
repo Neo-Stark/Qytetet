@@ -4,7 +4,7 @@ module ModeloQytetet
   require_relative"casilla"
   class TituloPropiedad
     attr_reader :alquiler_base, :factor_revalorizacion, :hipoteca_base,
-      :hipotecada, :nombre, :precio_edificar
+      :hipotecada, :nombre, :precio_edificar, :casilla
     attr_writer :casilla, :hipotecada, :propietario
     def initialize (nombre, alquiler, factor, hipoteca, edificar )
       @alquiler_base = alquiler

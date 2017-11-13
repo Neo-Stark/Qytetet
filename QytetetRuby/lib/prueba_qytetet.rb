@@ -4,6 +4,8 @@ module ModeloQytetet
   require_relative "tipo_sorpresa"
   require_relative "tablero"
   require_relative "jugador"
+  require_relative "inspector"
+  require_relative "qytetet"
   class PruebaQytetet
     @@mazo = Array.new
     
@@ -15,7 +17,6 @@ module ModeloQytetet
       @@mazo<< Sorpresa.new("Has ganado un viaje un viaje a Las Vegas, pero lo vendes porque prefieres seguir programando",
         800, TipoSorpresa::PAGARCOBRAR )
       @@mazo<< Sorpresa.new("Decides ir de compras, vas en metro a Recogidas", 19, TipoSorpresa::IRACASILLA)
-      
     end
     private
     def self.get_sorpresa(tipo_sorpresa)
@@ -47,23 +48,19 @@ module ModeloQytetet
       #      end
       return s
     end
+#EXAMEN-inicio
     public
     def self.main()
-      inicializar_sorpresas
-      m = Array.new
-      #      m = ir_a_casilla
-      #      m = get_sorpresa(TipoSorpresa::SALIRCARCEL)
-      m = mayor_que_0
-      puts m.size
-      #      for elemento in m                   \#Forma 1 de imprimir por pantalla
-      #        puts elemento
-      #      end
-      puts Tablero.new.to_s
-      
-      
-      puts"\n", m.shift.to_s until m.empty? #Forma 2 de imprimir por pantalla
-      puts Jugador.new("Fran").encarcelado
+      juego = Qytetet.instance
+      tablero = juego.tablero
+      puts tablero
+      inspector = Inspector.crear_inspector_codigo("Fran", 1)
+      inspector.asignar_casilla(juego.tablero.obtener_casilla_numero(6))  #La casilla 5 no es de tipo calle
+      inspector.asignar_casilla(juego.tablero.obtener_casilla_numero(8))
+      inspector.inspeccionar
+      Inspector.imprimir_manual
     end
   end
-# PruebaQytetet.main
+ PruebaQytetet.main
 end
+#EXAMEN-fin

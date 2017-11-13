@@ -11,7 +11,9 @@ module ModeloQytetet
     end
     
     def to_s
-      @casillas.each { |c| c.to_s }
+      string = ""
+      @casillas.each { |c| string += c.to_s }
+      string
     end
     private
     def inicializar
@@ -56,16 +58,11 @@ module ModeloQytetet
       casilla.eq(@carcel.numero_casilla)
     end
     def obtener_casilla_numero(casilla)
-      @casilla[casilla]
+      @casillas[casilla]
     end
     def obtener_nueva_casilla(casilla, desplazamiento)
-      
-    end
-    def self.main
-      t = Tablero.new
-      puts t.carcel.to_s
-      puts t.to_s
+      index = (casilla + desplazamiento) % 20
+      @casillas.at(index)
     end
   end
-  Tablero.main
 end
