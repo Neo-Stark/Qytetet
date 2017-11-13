@@ -7,17 +7,19 @@ module ModeloQytetet
   require_relative 'tablero'
   class Qytetet
     include Singleton
-      @@MAX_JUGADORES = 4
-      @@MAX_CARTAS = 10
-      @@PRECIO_LIBERTAD = 200
-      @@SALDO_SALIDA = 1000
+      MAX_JUGADORES = 4
+      MAX_CARTAS = 10
+      PRECIO_LIBERTAD = 200
+      SALDO_SALIDA = 1000
+      @@mazo = Array.new
       attr_reader :carta_actual, :jugador_actual
     def initialize
       @carta_actual = nil
-      @mazo
+      @mazo = Array.new
       @jugador_actual = nil
-      @jugadores = Array.new
+      inicializar_jugadores
       inicializar_tablero
+      inicializar_cartas_sorpresa
       @dado
     end
     def aplicar_sorpresa
@@ -81,6 +83,7 @@ module ModeloQytetet
       @@mazo<< Sorpresa.new("Anoche te pasaste con la juerga, te has dejado 750 en una noche", 750, TipoSorpresa::PAGARCOBRAR)
     end
     def inicializar_jugadores(nombres)
+      @jugadores = Array.new
       nombres.each { |nombre| @jugadores<<Jugador.new(nombre, @tablero.obtener_casilla_numero(0))  }
     end
     def inicializar_tablero
