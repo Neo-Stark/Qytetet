@@ -59,11 +59,16 @@ public class Tablero {
     }
 
     Casilla obtenerNuevaCasilla(Casilla casilla, int desplazamiento) {
-
+        int Nueva_casilla = (casilla.getNumeroCasilla() + desplazamiento) % 20;
+        return casillas.get(Nueva_casilla);
     }
 
     Casilla getCarcel() {
         return carcel;
+    }
+
+    boolean esCasillaCarcel(int numeroCasilla) {
+        return (numeroCasilla == this.carcel.getNumeroCasilla());
     }
 
     @Override

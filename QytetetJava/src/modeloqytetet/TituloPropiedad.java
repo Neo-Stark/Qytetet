@@ -10,6 +10,7 @@ package modeloqytetet;
  * @author fran98
  */
 public class TituloPropiedad {
+
     private String nombre;
     private Boolean hipotecada;
     private int alquilerBase;
@@ -30,57 +31,64 @@ public class TituloPropiedad {
         this.casilla = null;
     }
 
-     String getNombre() {
+    String getNombre() {
         return nombre;
     }
 
-     Boolean getHipotecada() {
+    Casilla getCasilla() {
+        return this.casilla;
+    }
+
+    Boolean getHipotecada() {
         return hipotecada;
     }
 
-     void setHipotecada(Boolean hipotecada) {
+    void setHipotecada(Boolean hipotecada) {
         this.hipotecada = hipotecada;
     }
 
-     int getAlquilerBase() {
+    int getAlquilerBase() {
         return alquilerBase;
     }
 
-     float getFactorRevalorizacion() {
+    float getFactorRevalorizacion() {
         return factorRevalorizacion;
     }
 
-     int getHipotecaBase() {
+    int getHipotecaBase() {
         return hipotecaBase;
     }
 
-     int getPrecioEdificar() {
+    int getPrecioEdificar() {
         return precioEdificar;
     }
-     void setPropietario(Jugador propietario){
-         
-     }
-     void cobrarAlquiler(int coste) {
-         
-     }
-     boolean propietarioEncarcelado() {
-         
-     }
-     boolean tengoPropietario() { 
-         
-     }
-     
-     void setCasilla(Casilla casilla) {
-         this.casilla = casilla;
-     }
+
+    void setPropietario(Jugador propietario) {
+
+    }
+
+    void cobrarAlquiler(int coste) {
+
+    }
+
+    boolean propietarioEncarcelado() {
+
+    }
+
+    boolean tengoPropietario() {
+        return propietario != null;
+    }
+
+    void setCasilla(Casilla casilla) {
+        this.casilla = casilla;
+    }
+
     @Override
-    public String toString()
-    {
-        return "Titulo propiedad{nombre=" + nombre + ", hipotecada=" + hipotecada 
+    public String toString() {
+        return "Titulo propiedad{nombre=" + nombre + ", hipotecada=" + hipotecada
                 + ", alquiler base= " + alquilerBase + " factor revalorizado="
                 + factorRevalorizacion + ", hipoteca base" + hipotecaBase
                 + ", precio edificar=" + precioEdificar + "}";
     }
-    
-    
+
 }

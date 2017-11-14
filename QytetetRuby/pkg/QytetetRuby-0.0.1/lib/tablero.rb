@@ -61,7 +61,7 @@ module ModeloQytetet
       @casillas[casilla]
     end
     def obtener_nueva_casilla(casilla, desplazamiento)
-      index = (casilla + desplazamiento) % 20
+      index = (casilla.numero_casilla + desplazamiento) % 20
       @casillas.at(index)
     end
   end

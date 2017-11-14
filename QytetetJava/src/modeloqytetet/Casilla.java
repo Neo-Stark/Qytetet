@@ -36,7 +36,10 @@ public class Casilla {
     private void setTitulo(TituloPropiedad titulo) {
         this.titulo = titulo;
     }
-
+    int getCoste()
+    {
+        return this.coste;
+    }
     public int getNumeroCasilla() {
         return numeroCasilla;
     }
@@ -90,10 +93,6 @@ public class Casilla {
 
     }
 
-    boolean estaHipotecada() {
-
-    }
-
     int getCosteHipoteca() {
 
     }
@@ -117,10 +116,15 @@ public class Casilla {
     boolean sePuedeEdificarCasa() {
 
     }
-
-    boolean soyEdificable() {
-
+    boolean soyEdificable(){
+        
+        return (tipo == TipoCasilla.CALLE);
     }
+    boolean estaHipotecada(){
+        
+        return titulo.getHipotecada();
+    }
+    
     boolean tengoPropietario() {
         
     }

@@ -6,10 +6,10 @@ import java.util.Collections;
 public class Qytetet {
 
     public int MAX_JUGADORES = 4;
-    int MAX_CARTAS = 10;
-    int MAX_CASILLAS = 20;
-    int PRECIO_LIBERTAD = 200;
-    int SALDO_SALIDA = 1000;
+    public int MAX_CARTAS = 10;
+    public int MAX_CASILLAS = 20;
+    public int PRECIO_LIBERTAD = 200;
+    public int SALDO_SALIDA = 1000;
     private static final Qytetet instance = new Qytetet();
     private Dado dado;
     private Sorpresa cartaActual;
@@ -18,14 +18,8 @@ public class Qytetet {
     private Jugador jugadorActual;
     private Tablero tablero;
 
-<<<<<<< HEAD
     private Qytetet() {
-=======
-    private Qytetet(String[] nombres) {
->>>>>>> d79725914e860936bf5acec09055bea8927959dd
-        inicializarTablero();
-        inicializarCartasSorpresa();
-        inicializarJugadores(nombres);
+
     }
 
     public Sorpresa getCartaActual() {
@@ -58,7 +52,7 @@ public class Qytetet {
 
     private void inicializarJugadores(String[] nombres) {
         for (String n : nombres) {
-            jugadores.add(new Jugador(n, tablero.obtenerCasillaNumero(0)));
+            jugadores.add(new Jugador(n));
         }
     }
 
@@ -69,8 +63,30 @@ public class Qytetet {
     public static Qytetet getInstance() {
         return instance;
     }
+    
+    void siguienteJugador(){
+        int jugadorSiguiente = (jugadores.indexOf(this.jugadorActual) + 1) % MAX_JUGADORES;
+        jugadorActual=jugadores.get(jugadorSiguiente);
+    }
+    
+    
+    void salidaJugadores(){     
+        for (Jugador jugador : this.jugadores)
+        {
+            jugador.actualizarPosicion(tablero.obtenerCasillaNumero(0));
+            jugador.modificarSaldo(7500);
+        }
+      jugadorActual = jugadores.get ((int) (Math.random() * MAX_JUGADORES) + 1);
+            
+    }
+    
+    ArrayList propiedadesHipotecadasJugador(boolean hipotecadas){
+        ArrayList <TituloPropiedad> propiedades = new ArrayList();
+        propiedades =jugadorActual.obtenerPropiedadesHipotecadas(hipotecadas);
+        return propiedades;
+            
+    }
 
-<<<<<<< HEAD
     public void inicicializarJuego(String[] nombres)
     {
         inicializarJugadores(nombres);
@@ -78,6 +94,7 @@ public class Qytetet {
         inicializarTablero();
         salidaJugadores();
     }
-=======
->>>>>>> d79725914e860936bf5acec09055bea8927959dd
+    public Tablero getTablero(){
+        return this.tablero;
+    }
 }
