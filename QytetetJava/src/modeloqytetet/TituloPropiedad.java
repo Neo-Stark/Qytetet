@@ -64,15 +64,15 @@ public class TituloPropiedad {
     }
 
     void setPropietario(Jugador propietario) {
-
+        this.propietario = propietario;
     }
 
     void cobrarAlquiler(int coste) {
-
+        propietario.modificarSaldo(coste);
     }
 
     boolean propietarioEncarcelado() {
-
+        return propietario.isEncarcelado();
     }
 
     boolean tengoPropietario() {

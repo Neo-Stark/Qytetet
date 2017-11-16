@@ -27,6 +27,32 @@ public class Jugador {
         this.saldo = 0;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    boolean actualizarPosicion(Casilla casilla) {
+        boolean tengoPropietario = false;
+        if (casilla.getNumeroCasilla() < casillaActual.getNumeroCasilla()) {
+            modificarSaldo(Qytetet.getInstance().SALDO_SALIDA);
+        }
+
+        setCasillaActual(casilla);
+
+        if (casilla.soyEdificable()) {
+            if (casilla.tengoPropietario()) {
+                tengoPropietario = true;
+                if (!casilla.propietarioEncarcelado()) {
+                    modificarSaldo(-casilla.cobrarAlquiler());
+                }
+            }
+        } else if (casilla.getTipo() == TipoCasilla.IMPUESTO) {
+            modificarSaldo(-casilla.getCoste());
+        }
+
+        return tengoPropietario;
+    }
+
     public boolean isEncarcelado() {
         return encarcelado;
     }
@@ -51,12 +77,18 @@ public class Jugador {
         return !propiedades.isEmpty();
     }
 
-    boolean actualizarPosicion(Casilla casilla) {
-
-    }
-
     boolean comprarTitulo() {
-
+        boolean puedoComprar = false;
+        if (casillaActual.soyEdificable()) {
+            if (!casillaActual.tengoPropietario()) {
+                if (casillaActual.getCoste() <= saldo) {
+                    propiedades.add(casillaActual.asignarPropietario(this));
+                    modificarSaldo(-casillaActual.getCoste());
+                    puedoComprar = true;
+                }
+            }
+        }
+        return puedoComprar;
     }
 
     Sorpresa devolverCartaLibertad() {
@@ -67,7 +99,8 @@ public class Jugador {
     }
 
     void irACarcel(Casilla casilla) {
-
+        setCasillaActual(casilla);
+        setEncarcelado(true);
     }
 
     void modificarSaldo(int cantidad) {
@@ -75,15 +108,15 @@ public class Jugador {
     }
 
     ArrayList<TituloPropiedad> obtenerPropiedadesHipotecadas(boolean hipotecada) {
-        ArrayList <TituloPropiedad> propiedades = new ArrayList();
-        
-        for(TituloPropiedad propiedad:propiedades ){
-                // RECORRE TODO ArrayList PROPIEDADES
-                if(propiedad.getHipotecada() == hipotecada){
-                    propiedades.add(propiedad);
-                }
+        ArrayList<TituloPropiedad> misPropiedades = new ArrayList();
+
+        for (TituloPropiedad propiedad : this.propiedades) {
+            // RECORRE TODO ArrayList PROPIEDADES
+            if (propiedad.getHipotecada() == hipotecada) {
+                misPropiedades.add(propiedad);
+            }
         }
-        return propiedades;
+        return misPropiedades;
     }
 
     int obtenerCapital() {
@@ -100,36 +133,41 @@ public class Jugador {
     }
 
     void pagarCobrarPorCasaYHotel(int cantidad) {
-
+        int numeroTotal = cuantasCasasHotelesTengo();
+        modificarSaldo(cantidad * numeroTotal);
     }
 
     boolean pagarLibertad(int cantidad) {
-
+        throw new UnsupportedOperationException("Sin implementar");
     }
 
     boolean puedoEdificarCasa(Casilla casilla) {
+        boolean esMia = esDeMiPropiedad(casilla);
+        boolean tengoSaldo = false;
 
+        if (esMia) {
+            tengoSaldo = tengoSaldo(casilla.getPrecioEdificar());
+        }
+
+        return esMia && tengoSaldo;
     }
 
     boolean puedoEdificarHotel(Casilla casilla) {
-
+        throw new UnsupportedOperationException("Sin implementar");
     }
 
     boolean puedoHipotecar(Casilla casilla) {
-
+        return esDeMiPropiedad(casilla);
     }
 
     boolean puedoPagarHipoteca(Casilla casilla) {
-
+        throw new UnsupportedOperationException("Sin implementar");
     }
 
     boolean puedoVenderPropiedad(Casilla casilla) {
-        boolean propietario;
-        propietario = false;
-
-        if (esDeMiPropiedad(casilla) == true) {
-        }
-        return propietario;
+        boolean esMia = esDeMiPropiedad(casilla);
+        boolean hipotecada = casilla.estaHipotecada();
+        return esMia && !hipotecada;
     }
 
     boolean tengoCartaLibertad() {
@@ -137,12 +175,13 @@ public class Jugador {
     }
 
     void venderPropiedad(Casilla casilla) {
-
+        int precioVenta = casilla.venderTitulo();
+        modificarSaldo(precioVenta);
+        eliminarDeMisPropiedades(casilla);
     }
 
     int cuantasCasasHotelesTengo() {
-        int inmuebles;
-        inmuebles = 0;
+        int inmuebles = 0;
         for (TituloPropiedad inmueble : propiedades) {
             inmuebles += inmueble.getCasilla().getNumCasas();
             inmuebles += inmueble.getCasilla().getNumHoteles();
@@ -152,18 +191,19 @@ public class Jugador {
     }
 
     void eliminarDeMisPropiedades(Casilla casilla) {
-        int numero= casilla.getNumeroCasilla();
+        int numero = casilla.getNumeroCasilla();
         propiedades.remove(numero);
     }
 
     boolean esDeMiPropiedad(Casilla casilla) {
-
+        return propiedades.contains(casilla.getTitulo());
     }
 
     boolean tengoSaldo(int cantidad) {
-        boolean mi_saldo  = false;
-        if(saldo >= cantidad)
+        boolean mi_saldo = false;
+        if (saldo >= cantidad) {
             mi_saldo = true;
+        }
         return mi_saldo;
     }
 }

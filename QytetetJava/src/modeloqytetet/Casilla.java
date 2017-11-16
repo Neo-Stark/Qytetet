@@ -33,13 +33,18 @@ public class Casilla {
         this.tipo = tipo;
     }
 
-    private void setTitulo(TituloPropiedad titulo) {
-        this.titulo = titulo;
+    TipoCasilla getTipo() {
+        return this.tipo;
     }
-    int getCoste()
-    {
+
+    public TituloPropiedad getTitulo() {
+        return titulo;
+    }
+
+    int getCoste() {
         return this.coste;
     }
+
     public int getNumeroCasilla() {
         return numeroCasilla;
     }
@@ -50,6 +55,18 @@ public class Casilla {
 
     int getNumCasas() {
         return numCasas;
+    }
+
+    int getCosteHipoteca() {
+        throw new UnsupportedOperationException("Sin implementar");
+    }
+
+    int getPrecioEdificar() {
+        return titulo.getPrecioEdificar();
+    }
+
+    private void setTitulo(TituloPropiedad titulo) {
+        this.titulo = titulo;
     }
 
     void setNumHoteles(int numHoteles) {
@@ -70,68 +87,78 @@ public class Casilla {
     }
 
     TituloPropiedad asignarPropietario(Jugador jugador) {
-
+        titulo.setPropietario(jugador);
+        return titulo;
     }
 
     int calcularValorHipoteca() {
-
+        int hipotecaBase = titulo.getHipotecaBase();
+        return hipotecaBase + (int)(numCasas*0.5*hipotecaBase + numHoteles*hipotecaBase);
     }
 
     int cancelarHipoteca() {
-
+        throw new UnsupportedOperationException("Sin implementar");
     }
 
     int cobrarAlquiler() {
-
+        int costeAlquilerBase = titulo.getAlquilerBase();
+        int costeAlquiler = costeAlquilerBase + (int)(numCasas*0.5 + numHoteles*2);
+        titulo.cobrarAlquiler(costeAlquiler);
+        return costeAlquiler;
     }
 
     int edificarCasa() {
-
+        setNumCasas(numCasas + 1);
+        return titulo.getPrecioEdificar();
     }
 
     int edificarHotel() {
-
-    }
-
-    int getCosteHipoteca() {
-
-    }
-
-    int getPrecioEdificar() {
-
+        throw new UnsupportedOperationException("Sin implementar");
     }
 
     int hipotecar() {
-
+        titulo.setHipotecada(Boolean.TRUE);
+        return calcularValorHipoteca();
     }
 
     int precioTotalComprar() {
-
+        throw new UnsupportedOperationException("Sin implementar");
     }
 
     boolean propietarioEncarcelado() {
-
+        return titulo.propietarioEncarcelado();
     }
 
     boolean sePuedeEdificarCasa() {
-
+        return numCasas < 4;
     }
-    boolean soyEdificable(){
-        
+
+    boolean soyEdificable() {
+
         return (tipo == TipoCasilla.CALLE);
     }
-    boolean estaHipotecada(){
-        
+
+    boolean estaHipotecada() {
+
         return titulo.getHipotecada();
     }
-    
+
     boolean tengoPropietario() {
-        
+        return titulo.tengoPropietario();
     }
-    int venderTitulo(){
+
+    int venderTitulo() {
+        int precioCompra = coste + (numCasas + numHoteles)*titulo.getPrecioEdificar();
+        int precioVenta = precioCompra + (int)titulo.getFactorRevalorizacion()*precioCompra;
         
+        titulo.setPropietario(null);
+        setNumCasas(0);
+        setNumHoteles(0);
+        
+        return precioVenta;
     }
-    void asignarTituloPropiedad(){
-        
+
+    void asignarTituloPropiedad() {
+
     }
 }

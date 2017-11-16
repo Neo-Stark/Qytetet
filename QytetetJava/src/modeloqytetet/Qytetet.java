@@ -2,6 +2,8 @@ package modeloqytetet;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Qytetet {
 
@@ -63,38 +65,155 @@ public class Qytetet {
     public static Qytetet getInstance() {
         return instance;
     }
-    
-    void siguienteJugador(){
+
+    void siguienteJugador() {
         int jugadorSiguiente = (jugadores.indexOf(this.jugadorActual) + 1) % MAX_JUGADORES;
-        jugadorActual=jugadores.get(jugadorSiguiente);
+        jugadorActual = jugadores.get(jugadorSiguiente);
     }
-    
-    
-    void salidaJugadores(){     
-        for (Jugador jugador : this.jugadores)
-        {
+
+    void salidaJugadores() {
+        for (Jugador jugador : this.jugadores) {
             jugador.actualizarPosicion(tablero.obtenerCasillaNumero(0));
             jugador.modificarSaldo(7500);
         }
-      jugadorActual = jugadores.get ((int) (Math.random() * MAX_JUGADORES) + 1);
-            
-    }
-    
-    ArrayList propiedadesHipotecadasJugador(boolean hipotecadas){
-        ArrayList <TituloPropiedad> propiedades = new ArrayList();
-        propiedades =jugadorActual.obtenerPropiedadesHipotecadas(hipotecadas);
-        return propiedades;
-            
+        jugadorActual = jugadores.get((int) (Math.random() * MAX_JUGADORES) + 1);
+
     }
 
-    public void inicicializarJuego(String[] nombres)
-    {
+    ArrayList propiedadesHipotecadasJugador(boolean hipotecadas) {
+        ArrayList<TituloPropiedad> propiedades = new ArrayList();
+        propiedades = jugadorActual.obtenerPropiedadesHipotecadas(hipotecadas);
+        return propiedades;
+
+    }
+
+    public void inicicializarJuego(String[] nombres) {
         inicializarJugadores(nombres);
         inicializarCartasSorpresa();
         inicializarTablero();
         salidaJugadores();
     }
-    public Tablero getTablero(){
+
+    public Tablero getTablero() {
         return this.tablero;
+    }
+
+    public boolean comprarTituloPropiedad() {
+        boolean puedoComprar = jugadorActual.comprarTitulo();
+        return puedoComprar;
+    }
+
+    public boolean edificarCasa(Casilla casilla) {
+        boolean puedoEdificar = false;
+        boolean sePuedeEdificar = false;
+        if (casilla.soyEdificable()) {
+            sePuedeEdificar = casilla.sePuedeEdificarCasa();
+            if (sePuedeEdificar) {
+                puedoEdificar = jugadorActual.puedoEdificarCasa(casilla);
+                if (puedoEdificar) {
+                    jugadorActual.modificarSaldo(-casilla.edificarCasa());
+                }
+            }
+        }
+        return puedoEdificar;
+    }
+
+    public boolean edificarHotel(Casilla casilla) {
+        throw new UnsupportedOperationException("Sin implementar");
+    }
+
+    public boolean hipotecarPropiedad(Casilla casilla) {
+        boolean puedoHipotecar = false;
+        if (casilla.soyEdificable() && !casilla.estaHipotecada()) {
+            puedoHipotecar = jugadorActual.puedoHipotecar(casilla);
+            if (puedoHipotecar) {
+                jugadorActual.modificarSaldo(casilla.hipotecar());
+            }
+        }
+        return puedoHipotecar;
+    }
+    
+    public boolean venderPropiedad(Casilla casilla){
+        boolean puedoVender = false;
+        if (casilla.soyEdificable()){
+            puedoVender = jugadorActual.puedoVenderPropiedad(casilla);
+            if (puedoVender){
+                jugadorActual.venderPropiedad(casilla);
+            }
+        }
+        return puedoVender;
+    }
+    
+    public boolean aplicarSorpresa(){
+        boolean tienePropietario = false;
+        
+        if (cartaActual.getTipo() == TipoSorpresa.PAGARCOBRAR)
+            jugadorActual.modificarSaldo(cartaActual.getValor());
+        else if (cartaActual.getTipo() == TipoSorpresa.IRACASILLA){
+            boolean esCarcel = tablero.esCasillaCarcel(cartaActual.getValor());
+            if (esCarcel){
+                encarcelarJugador();
+            }
+            else {
+                Casilla nuevaCasilla = tablero.obtenerCasillaNumero(cartaActual.getValor());
+                tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);
+            }
+        }
+        else if (cartaActual.getTipo() == TipoSorpresa.PORCASAHOTEL){
+            jugadorActual.pagarCobrarPorCasaYHotel(cartaActual.getValor());
+        }
+        else if (cartaActual.getTipo() == TipoSorpresa.PORJUGADOR){
+            for (Jugador jugador : jugadores){
+                if (jugador != jugadorActual){
+                    jugador.modificarSaldo(cartaActual.getValor());
+                    jugadorActual.modificarSaldo(-cartaActual.getValor());
+                }
+            }
+        }
+        
+        if (cartaActual.getTipo() == TipoSorpresa.SALIRCARCEL){
+            jugadorActual.setCartaLibertad(cartaActual);
+        }
+        else
+            mazo.add(cartaActual);
+        
+        return tienePropietario;
+    }
+    
+    private void encarcelarJugador(){
+        if (!jugadorActual.tengoCartaLibertad()){
+            jugadorActual.irACarcel(tablero.getCarcel());
+        }
+        else{
+            mazo.add(jugadorActual.devolverCartaLibertad());
+        }
+    }
+    
+    public boolean jugar(){
+        boolean tienePropietario = false;
+        int valorDado = dado.tirar();
+        Casilla casillaPosicion = jugadorActual.getCasillaActual();
+        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, valorDado);
+        tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);
+        
+        if (!nuevaCasilla.soyEdificable()){
+            if (nuevaCasilla.getTipo() == TipoCasilla.JUEZ){
+                encarcelarJugador();
+            }
+            else if (nuevaCasilla.getTipo() == TipoCasilla.SORPRESA){
+                cartaActual = mazo.get(0);
+                mazo.remove(0);
+            }
+        }
+        return tienePropietario;
+    }
+    
+    public Map obtenerRanking(){
+        Map<Integer, String> ranking = new TreeMap<>(java.util.Collections.reverseOrder());
+        for (Jugador jugador : jugadores){
+            int capital = jugador.obtenerCapital();
+            ranking.put(capital, jugador.getNombre());
+        }
+        return ranking;
     }
 }
