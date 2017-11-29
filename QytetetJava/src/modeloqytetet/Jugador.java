@@ -138,10 +138,14 @@ public class Jugador {
     }
 
     boolean pagarLibertad(int cantidad) {
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean tengoSaldo = tengoSaldo(cantidad);
+        if (tengoSaldo) {
+            modificarSaldo(cantidad);
+        }
+        return tengoSaldo;
     }
 
-    boolean puedoEdificarCasa(Casilla casilla) {
+    boolean puedoEdificar/*casa*/(Casilla casilla) {
         boolean esMia = esDeMiPropiedad(casilla);
         boolean tengoSaldo = false;
 
@@ -152,9 +156,9 @@ public class Jugador {
         return esMia && tengoSaldo;
     }
 
-    boolean puedoEdificarHotel(Casilla casilla) {
-        throw new UnsupportedOperationException("Sin implementar");
-    }
+//    boolean puedoEdificarHotel(Casilla casilla) {
+//        
+//    }
 
     boolean puedoHipotecar(Casilla casilla) {
         return esDeMiPropiedad(casilla);

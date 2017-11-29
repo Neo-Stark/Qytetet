@@ -93,7 +93,7 @@ public class Casilla {
 
     int calcularValorHipoteca() {
         int hipotecaBase = titulo.getHipotecaBase();
-        return hipotecaBase + (int)(numCasas*0.5*hipotecaBase + numHoteles*hipotecaBase);
+        return hipotecaBase + (int) (numCasas * 0.5 * hipotecaBase + numHoteles * hipotecaBase);
     }
 
     int cancelarHipoteca() {
@@ -102,7 +102,7 @@ public class Casilla {
 
     int cobrarAlquiler() {
         int costeAlquilerBase = titulo.getAlquilerBase();
-        int costeAlquiler = costeAlquilerBase + (int)(numCasas*0.5 + numHoteles*2);
+        int costeAlquiler = costeAlquilerBase + (int) (numCasas * 0.5 + numHoteles * 2);
         titulo.cobrarAlquiler(costeAlquiler);
         return costeAlquiler;
     }
@@ -113,7 +113,9 @@ public class Casilla {
     }
 
     int edificarHotel() {
-        throw new UnsupportedOperationException("Sin implementar");
+        setNumHoteles(numHoteles + 1);
+        setNumCasas(0);
+        return titulo.getPrecioEdificar();
     }
 
     int hipotecar() {
@@ -133,9 +135,13 @@ public class Casilla {
         return numCasas < 4;
     }
 
+    boolean sePuedeEdificarHotel() {
+        return numHoteles < 4 && numCasas == 4;
+    }
+
     boolean soyEdificable() {
 
-        return (tipo == TipoCasilla.CALLE);
+        return tipo == TipoCasilla.CALLE && (numCasas < 4 || numHoteles < 4);
     }
 
     boolean estaHipotecada() {
@@ -148,13 +154,13 @@ public class Casilla {
     }
 
     int venderTitulo() {
-        int precioCompra = coste + (numCasas + numHoteles)*titulo.getPrecioEdificar();
-        int precioVenta = precioCompra + (int)titulo.getFactorRevalorizacion()*precioCompra;
-        
+        int precioCompra = coste + (numCasas + numHoteles) * titulo.getPrecioEdificar();
+        int precioVenta = precioCompra + (int) titulo.getFactorRevalorizacion() * precioCompra;
+
         titulo.setPropietario(null);
         setNumCasas(0);
         setNumHoteles(0);
-        
+
         return precioVenta;
     }
 

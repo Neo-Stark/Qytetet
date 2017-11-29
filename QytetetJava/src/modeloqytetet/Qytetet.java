@@ -52,7 +52,7 @@ public class Qytetet {
         Collections.shuffle(mazo);
     }
 
-    private void inicializarJugadores(String[] nombres) {
+    private void inicializarJugadores(ArrayList<String> nombres) {
         for (String n : nombres) {
             jugadores.add(new Jugador(n));
         }
@@ -66,7 +66,7 @@ public class Qytetet {
         return instance;
     }
 
-    void siguienteJugador() {
+    public void siguienteJugador() {
         int jugadorSiguiente = (jugadores.indexOf(this.jugadorActual) + 1) % MAX_JUGADORES;
         jugadorActual = jugadores.get(jugadorSiguiente);
     }
@@ -87,7 +87,7 @@ public class Qytetet {
 
     }
 
-    public void inicicializarJuego(String[] nombres) {
+    public void inicicializarJuego(ArrayList<String> nombres) {
         inicializarJugadores(nombres);
         inicializarCartasSorpresa();
         inicializarTablero();
@@ -109,7 +109,7 @@ public class Qytetet {
         if (casilla.soyEdificable()) {
             sePuedeEdificar = casilla.sePuedeEdificarCasa();
             if (sePuedeEdificar) {
-                puedoEdificar = jugadorActual.puedoEdificarCasa(casilla);
+                puedoEdificar = jugadorActual.puedoEdificar(casilla);
                 if (puedoEdificar) {
                     jugadorActual.modificarSaldo(-casilla.edificarCasa());
                 }
@@ -119,7 +119,19 @@ public class Qytetet {
     }
 
     public boolean edificarHotel(Casilla casilla) {
-        throw new UnsupportedOperationException("Sin implementar");
+        boolean puedoEdificar = false;
+        boolean sePuedeEdificar = false;
+        if (casilla.soyEdificable()) {
+            sePuedeEdificar = casilla.sePuedeEdificarHotel();
+            if (sePuedeEdificar) {
+                puedoEdificar = jugadorActual.puedoEdificar(casilla);
+                if (puedoEdificar) {
+                    jugadorActual.modificarSaldo(-casilla.edificarHotel());
+                }
+            }
+        }
+        return puedoEdificar;
+        
     }
 
     public boolean hipotecarPropiedad(Casilla casilla) {
@@ -189,6 +201,21 @@ public class Qytetet {
         }
     }
     
+    public boolean intentarSalirCarcel(MetodoSalirCarcel metodo)
+    {
+        boolean libre = false;
+        if (metodo == MetodoSalirCarcel.TIRANDODADO){
+            int valorDado = dado.tirar();
+            libre = valorDado>4;
+        }
+        else if (metodo == MetodoSalirCarcel.PAGANDOLIBERTAD){
+            libre = jugadorActual.pagarLibertad(-PRECIO_LIBERTAD);
+        }
+        if (libre){
+            jugadorActual.setEncarcelado(false);
+        }
+        return libre;
+    }
     public boolean jugar(){
         boolean tienePropietario = false;
         int valorDado = dado.tirar();
@@ -209,7 +236,7 @@ public class Qytetet {
     }
     
     public Map obtenerRanking(){
-        Map<Integer, String> ranking = new TreeMap<>(java.util.Collections.reverseOrder());
+        Map<Integer, String> ranking = new TreeMap(java.util.Collections.reverseOrder());
         for (Jugador jugador : jugadores){
             int capital = jugador.obtenerCapital();
             ranking.put(capital, jugador.getNombre());

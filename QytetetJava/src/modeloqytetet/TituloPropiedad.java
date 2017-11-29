@@ -31,7 +31,7 @@ public class TituloPropiedad {
         this.casilla = null;
     }
 
-    String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 

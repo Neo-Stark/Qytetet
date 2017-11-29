@@ -23,7 +23,7 @@ public class Dado {
         return instancia;
     }
 
-    int tirar() {
+        int tirar() {
         numero = (int) (Math.random() * 6) + 1;
         return numero;
 
