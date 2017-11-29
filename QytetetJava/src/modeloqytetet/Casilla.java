@@ -33,7 +33,7 @@ public class Casilla {
         this.tipo = tipo;
     }
 
-    TipoCasilla getTipo() {
+    public TipoCasilla getTipo() {
         return this.tipo;
     }
 
@@ -41,7 +41,7 @@ public class Casilla {
         return titulo;
     }
 
-    int getCoste() {
+    public int getCoste() {
         return this.coste;
     }
 
@@ -49,19 +49,19 @@ public class Casilla {
         return numeroCasilla;
     }
 
-    int getNumHoteles() {
+    public int getNumHoteles() {
         return numHoteles;
     }
 
-    int getNumCasas() {
+    public int getNumCasas() {
         return numCasas;
     }
 
-    int getCosteHipoteca() {
+    public int getCosteHipoteca() {
         throw new UnsupportedOperationException("Sin implementar");
     }
 
-    int getPrecioEdificar() {
+    public int getPrecioEdificar() {
         return titulo.getPrecioEdificar();
     }
 
@@ -79,9 +79,18 @@ public class Casilla {
 
     @Override
     public String toString() {
-        String s = "Casilla{" + "numeroCasilla=" + numeroCasilla + ", coste=" + coste + ", numHoteles=" + numHoteles + ", numCasas=" + numCasas + ", tipo=" + tipo + " }\n";
+        String s = "Casilla{ numeroCasilla=" + numeroCasilla
+                + "\n\ttipo=" + tipo;
         if (titulo != null) {
-            s += " titulo=" + titulo;
+            s += "\n\tcoste=" + coste
+                    + "\n\tnumHoteles=" + numHoteles
+                    + "\n\tnumCasas=" + numCasas
+                    + "\n\t\tTitulo de propiedad= " + titulo;
+            if (titulo.tengoPropietario()) {
+                s += "\n\tPropietario: " + titulo.getPropietario().getNombre();
+            } else {
+                s += "\n\tNo tiene propietario";
+            }
         }
         return s;
     }
@@ -97,7 +106,9 @@ public class Casilla {
     }
 
     int cancelarHipoteca() {
-        throw new UnsupportedOperationException("Sin implementar");
+        titulo.setHipotecada(false);
+        int precio = (int) (1.1*calcularValorHipoteca());
+        return  precio;
     }
 
     int cobrarAlquiler() {

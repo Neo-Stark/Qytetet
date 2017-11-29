@@ -23,19 +23,25 @@ public class VistaTextualQytetet {
         return salida;
     }
 
- public int menuSalirCarcel(){
-    
-            this.mostrar("Te encuentras en la carcel.");
-            Map<Integer,String> menuC = new TreeMap();
-            menuC.put(0, "Tirar dado");
-            menuC.put(1, "Pagar tasa");
-            int salida = this.seleccionMenu(menuC);
-            return salida;
-            
- }
-  public boolean elegirQuieroComprar(){
-    
- }
+    public int menuSalirCarcel() {
+
+        this.mostrar("Te encuentras en la carcel.");
+        Map<Integer, String> menuC = new TreeMap();
+        menuC.put(0, "Tirar dado");
+        menuC.put(1, "Pagar tasa");
+        int salida = this.seleccionMenu(menuC);
+        return salida;
+
+    }
+
+    public int elegirQuieroComprar() {
+        this.mostrar("Quieres comprar la propiedad?");
+        Map<Integer, String> menuCP = new TreeMap();
+        menuCP.put(0, "SI");
+        menuCP.put(1, "NO");
+        return this.seleccionMenu(menuCP);
+    }
+
     public int menuElegirPropiedad(ArrayList<String> listaPropiedades) {  //numero y nombre de propiedades            
         Map<Integer, String> menuEP = new TreeMap();
         int numeroOpcion = 0;
@@ -43,6 +49,7 @@ public class VistaTextualQytetet {
             menuEP.put(numeroOpcion, prop); //opcion de menu, numero y nombre de propiedad
             numeroOpcion = numeroOpcion + 1;
         }
+        menuEP.put(numeroOpcion, "Volver Atras");
         int salida = this.seleccionMenu(menuEP); // M�todo para controlar la elecci�n correcta en el men� 
         return salida;
 
@@ -108,5 +115,5 @@ public class VistaTextualQytetet {
 
         System.out.println(texto);
     }
-
+    
 }

@@ -35,6 +35,11 @@ public class TituloPropiedad {
         return nombre;
     }
 
+    public Jugador getPropietario() {
+        return propietario;
+    }
+    
+
     Casilla getCasilla() {
         return this.casilla;
     }
@@ -75,7 +80,7 @@ public class TituloPropiedad {
         return propietario.isEncarcelado();
     }
 
-    boolean tengoPropietario() {
+    public boolean tengoPropietario() {
         return propietario != null;
     }
 

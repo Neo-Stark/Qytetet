@@ -31,6 +31,10 @@ public class Jugador {
         return nombre;
     }
 
+    public int getSaldo() {
+        return saldo;
+    }
+
     boolean actualizarPosicion(Casilla casilla) {
         boolean tengoPropietario = false;
         if (casilla.getNumeroCasilla() < casillaActual.getNumeroCasilla()) {
@@ -73,7 +77,7 @@ public class Jugador {
         this.cartaLibertad = cartaLibertad;
     }
 
-    boolean tengoPropiedades() {
+    public boolean tengoPropiedades() {
         return !propiedades.isEmpty();
     }
 
@@ -111,7 +115,6 @@ public class Jugador {
         ArrayList<TituloPropiedad> misPropiedades = new ArrayList();
 
         for (TituloPropiedad propiedad : this.propiedades) {
-            // RECORRE TODO ArrayList PROPIEDADES
             if (propiedad.getHipotecada() == hipotecada) {
                 misPropiedades.add(propiedad);
             }
@@ -159,13 +162,12 @@ public class Jugador {
 //    boolean puedoEdificarHotel(Casilla casilla) {
 //        
 //    }
-
     boolean puedoHipotecar(Casilla casilla) {
         return esDeMiPropiedad(casilla);
     }
 
     boolean puedoPagarHipoteca(Casilla casilla) {
-        throw new UnsupportedOperationException("Sin implementar");
+        return tengoSaldo((int) (1.1*casilla.calcularValorHipoteca()));
     }
 
     boolean puedoVenderPropiedad(Casilla casilla) {
@@ -204,10 +206,15 @@ public class Jugador {
     }
 
     boolean tengoSaldo(int cantidad) {
-        boolean mi_saldo = false;
+        boolean miSaldo = false;
         if (saldo >= cantidad) {
-            mi_saldo = true;
+            miSaldo = true;
         }
-        return mi_saldo;
+        return miSaldo;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + this.nombre;
     }
 }
