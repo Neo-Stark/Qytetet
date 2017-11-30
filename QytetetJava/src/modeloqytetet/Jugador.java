@@ -21,6 +21,7 @@ public class Jugador {
     private Casilla casillaActual;
 
     public Jugador(String nombre) {
+        propiedades = new ArrayList<>();
         this.nombre = nombre;
         this.cartaLibertad = null;
         this.casillaActual = null;
@@ -85,7 +86,7 @@ public class Jugador {
         boolean puedoComprar = false;
         if (casillaActual.soyEdificable()) {
             if (!casillaActual.tengoPropietario()) {
-                if (casillaActual.getCoste() <= saldo) {
+                if (tengoSaldo(casillaActual.getCoste())) {
                     propiedades.add(casillaActual.asignarPropietario(this));
                     modificarSaldo(-casillaActual.getCoste());
                     puedoComprar = true;
@@ -197,7 +198,7 @@ public class Jugador {
     }
 
     void eliminarDeMisPropiedades(Casilla casilla) {
-        int numero = casilla.getNumeroCasilla();
+        int numero = propiedades.indexOf(casilla.getTitulo());
         propiedades.remove(numero);
     }
 

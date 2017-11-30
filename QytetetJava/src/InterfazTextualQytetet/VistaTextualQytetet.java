@@ -66,7 +66,7 @@ public class VistaTextualQytetet {
                 String texto = fila.getValue();
                 this.mostrar(numero + " : " + texto);  // n�mero de opci�n y texto
             }
-            this.mostrar("\n Elige una opci�n: ");
+            this.mostrar("\n Elige una opcion: ");
             lectura = in.nextLine();  //lectura de teclado
             valido = this.comprobarOpcion(lectura, 0, menu.size() - 1); //m�todo para comprobar la elecci�n correcta
         } while (!valido);
@@ -78,7 +78,7 @@ public class VistaTextualQytetet {
         String lectura;
         ArrayList<String> nombres = new ArrayList();
         do { //repetir mientras que el usuario no escriba un n�mero correcto 
-            this.mostrar("Escribe el n�mero de jugadores: (de 2 a 4):");
+            this.mostrar("Escribe el numero de jugadores: (de 2 a 4):");
             lectura = in.nextLine();  //lectura de teclado
             valido = this.comprobarOpcion(lectura, 2, 4); //m�todo para comprobar la elecci�n correcta
         } while (!valido);
@@ -115,5 +115,5 @@ public class VistaTextualQytetet {
 
         System.out.println(texto);
     }
-    
+
 }

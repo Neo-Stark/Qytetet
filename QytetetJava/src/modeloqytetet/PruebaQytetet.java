@@ -1,6 +1,7 @@
 package modeloqytetet;
 
 import java.util.ArrayList;
+import InterfazTextualQytetet.*;
 
 /**
  *
@@ -8,35 +9,19 @@ import java.util.ArrayList;
  */
 public class PruebaQytetet {
     public static void main(String[] args) {
-        String[] nombres = {"Fran","Jose"};
-        Qytetet juego = Qytetet.getInstance();
-        System.out.println(juego.getTablero().toString());
+//        ArrayList<String> nombres = new ArrayList<>();
+//        nombres.add("Fran");
+//        nombres.add("Jose");
+//        nombres.add("Juan");
+//        nombres.add("Ivan");
+//        nombres.add("Iv");
+//        Qytetet juego = Qytetet.getInstance();
+//        juego.inicicializarJuego(nombres);
+//        System.out.println(juego.getTablero().toString());
+//        System.out.println(juego.getJugadorActual().toString());
+        ControladorQytetet juego = new ControladorQytetet();
+        juego.inicializacionJuego();
+        juego.desarrolloJuego();
+        
     }
-//    private static ArrayList<Sorpresa> mayorQue0()
-//    {
-//        ArrayList<Sorpresa> m = new ArrayList();
-//        for ( Sorpresa s : mazo)
-//            if (s.getValor() > 0 )
-//                m.add(s);
-//        
-//        return m;
-//    }
-//    private static ArrayList<Sorpresa> irACasilla()
-//    {
-//        ArrayList<Sorpresa> m = new ArrayList();
-//        for ( Sorpresa s : mazo)
-//            if (s.getTipo() == TipoSorpresa.IRACASILLA )
-//                m.add(s);
-//        
-//        return m;
-//    }
-//    private static ArrayList<Sorpresa> getSorpresa(TipoSorpresa sorpresa)
-//    {
-//        ArrayList<Sorpresa> m = new ArrayList();
-//        for ( Sorpresa s : mazo)
-//            if (s.getTipo() == sorpresa )
-//                m.add(s);
-//        
-//        return m;
-//    }   
 }

@@ -79,13 +79,13 @@ public class Casilla {
 
     @Override
     public String toString() {
-        String s = "Casilla{ numeroCasilla=" + numeroCasilla
+        String s = "Casilla{numeroCasilla=" + numeroCasilla
                 + "\n\ttipo=" + tipo;
         if (titulo != null) {
             s += "\n\tcoste=" + coste
                     + "\n\tnumHoteles=" + numHoteles
                     + "\n\tnumCasas=" + numCasas
-                    + "\n\t\tTitulo de propiedad= " + titulo;
+                    + "\n\t" + titulo;
             if (titulo.tengoPropietario()) {
                 s += "\n\tPropietario: " + titulo.getPropietario().getNombre();
             } else {
@@ -175,7 +175,4 @@ public class Casilla {
         return precioVenta;
     }
 
-    void asignarTituloPropiedad() {
-
-    }
 }

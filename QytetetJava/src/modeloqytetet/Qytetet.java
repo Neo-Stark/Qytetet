@@ -2,8 +2,11 @@ package modeloqytetet;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
+import java.util.Map;
+import java.util.Random;
 
 public class Qytetet {
 
@@ -78,16 +81,18 @@ public class Qytetet {
     }
 
     public void siguienteJugador() {
-        int jugadorSiguiente = (jugadores.indexOf(this.jugadorActual) + 1) % MAX_JUGADORES;
+        int jugadorSiguiente = (jugadores.indexOf(this.jugadorActual) + 1) % jugadores.size();
         jugadorActual = jugadores.get(jugadorSiguiente);
     }
 
     void salidaJugadores() {
         for (Jugador jugador : this.jugadores) {
-            jugador.actualizarPosicion(tablero.obtenerCasillaNumero(0));
+            jugador.setCasillaActual(tablero.obtenerCasillaNumero(0));
             jugador.modificarSaldo(7500);
         }
-        jugadorActual = jugadores.get((int) (Math.random() * MAX_JUGADORES) + 1);
+//        int i = new Random().nextInt(jugadores.size());
+//        jugadorActual = jugadores.get(i);
+        jugadorActual = jugadores.get((int) (Math.random() * jugadores.size()));
 
     }
 
@@ -101,8 +106,8 @@ public class Qytetet {
 
     public void inicicializarJuego(ArrayList<String> nombres) {
         inicializarJugadores(nombres);
-        inicializarCartasSorpresa();
         inicializarTablero();
+        inicializarCartasSorpresa();
         salidaJugadores();
     }
 
@@ -258,12 +263,12 @@ public class Qytetet {
         return tienePropietario;
     }
 
-    public Map obtenerRanking() { //MOPDIFICAR: el saldo no puede ser la clave del hash
-        Map<String, Integer> ranking = new TreeMap(java.util.Collections.reverseOrder());
-        for (Jugador jugador : jugadores) {
-            int capital = jugador.obtenerCapital();
-            ranking.put(jugador.getNombre(), capital);
-        }
+    public Map obtenerRanking() {
+        Map<String, Integer> ranking = new LinkedHashMap<>();
+        ArrayList<Jugador> listaOrdenada = new ArrayList(jugadores);
+        listaOrdenada.sort((p1, p2) -> p2.obtenerCapital() - p1.obtenerCapital());
+        listaOrdenada.forEach((jugador)
+                -> ranking.put(jugador.getNombre(), jugador.obtenerCapital()));
         return ranking;
     }
 }

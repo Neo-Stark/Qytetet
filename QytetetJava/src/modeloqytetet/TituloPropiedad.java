@@ -38,7 +38,6 @@ public class TituloPropiedad {
     public Jugador getPropietario() {
         return propietario;
     }
-    
 
     Casilla getCasilla() {
         return this.casilla;
@@ -90,10 +89,12 @@ public class TituloPropiedad {
 
     @Override
     public String toString() {
-        return "Titulo propiedad{nombre=" + nombre + ", hipotecada=" + hipotecada
-                + ", alquiler base= " + alquilerBase + " factor revalorizado="
-                + factorRevalorizacion + ", hipoteca base" + hipotecaBase
-                + ", precio edificar=" + precioEdificar + "}";
+        return "Titulo propiedad{nombre=" + nombre
+                + "\n\t\thipotecada=" + hipotecada
+                + "\n\t\talquiler base= " + alquilerBase
+                + "\n\t\tfactor revalorizado=" + factorRevalorizacion
+                + "\n\t\thipoteca base" + hipotecaBase
+                + "\n\t\tprecio edificar=" + precioEdificar + "}";
     }
 
 }

@@ -25,7 +25,7 @@ public class Sorpresa {
     {
         return this.texto;
     }
-    TipoSorpresa getTipo()
+    public TipoSorpresa getTipo()
     {
         return this.tipo;
     }
