@@ -70,6 +70,7 @@ public class ControladorQytetet {
                             if (juego.getCartaActual().getTipo() == TipoSorpresa.IRACASILLA) {
                                 vista.mostrar("Nueva casilla: " + casilla.toString());
                             }
+                            this.estadoActual();
 //                            break; Si la sorpresa lleva al jugador a una calle, entrara en case CALLE
                         case CALLE:
                             if (tienePropietario) {
@@ -85,9 +86,12 @@ public class ControladorQytetet {
                                     }
                                 }
                             }
+                            this.estadoActual();
                             break;
                     }
-                    this.estadoActual();
+                } else {
+                    vista.mostrar("Has caido en la casilla del juez,"
+                            + "vas directamente a la carcel.");
                 }
             }
             if (jugador.tengoPropiedades() && !jugador.isEncarcelado()) {
@@ -95,7 +99,7 @@ public class ControladorQytetet {
             } else {
                 vista.mostrar("No tienes propiedades");
             }
-            this.estadoActual();
+//            this.estadoActual();
             pasaTurno();
         }
     }
@@ -104,7 +108,7 @@ public class ControladorQytetet {
         int opcion;
         do {
             opcion = vista.menuGestionInmobiliaria();
-            if (jugador.tengoPropiedades()) {
+            if (jugador.tengoPropiedades() || opcion == 0) {
                 ArrayList<Casilla> noHipotecadas = juego.propiedadesHipotecadasJugador(false);
                 ArrayList<Casilla> Hipotecadas = juego.propiedadesHipotecadasJugador(true);
                 Casilla modCasilla;
@@ -114,11 +118,13 @@ public class ControladorQytetet {
                     case 1:
                         if (!noHipotecadas.isEmpty()) {
                             modCasilla = elegirPropiedad(noHipotecadas);
-                            if (juego.edificarCasa(modCasilla)) {
-                                vista.mostrar("Has edificado una casa en "
-                                        + modCasilla.getTitulo().getNombre());
-                            } else {
-                                vista.mostrar("No has podido edificar la casa.");
+                            if (!(modCasilla == null)) {
+                                if (juego.edificarCasa(modCasilla)) {
+                                    vista.mostrar("Has edificado una casa en "
+                                            + modCasilla.getTitulo().getNombre());
+                                } else {
+                                    vista.mostrar("No has podido edificar la casa.");
+                                }
                             }
                         } else {
                             vista.mostrar("Todas tus propiedades estan hipotecadas");
@@ -128,11 +134,13 @@ public class ControladorQytetet {
                     case 2:
                         if (!noHipotecadas.isEmpty()) {
                             modCasilla = elegirPropiedad(noHipotecadas);
-                            if (juego.edificarHotel(modCasilla)) {
-                                vista.mostrar("Has edificado un hotel en "
-                                        + modCasilla.getTitulo().getNombre());
-                            } else {
-                                vista.mostrar("No has podido edificar el hotel.");
+                            if (!(modCasilla == null)) {
+                                if (juego.edificarHotel(modCasilla)) {
+                                    vista.mostrar("Has edificado un hotel en "
+                                            + modCasilla.getTitulo().getNombre());
+                                } else {
+                                    vista.mostrar("No has podido edificar el hotel.");
+                                }
                             }
                         } else {
                             vista.mostrar("Todas tus propiedades estan hipotecadas");
@@ -142,11 +150,13 @@ public class ControladorQytetet {
                     case 3:
                         if (!noHipotecadas.isEmpty()) {
                             modCasilla = elegirPropiedad(noHipotecadas);
-                            if (juego.venderPropiedad(modCasilla)) {
-                                vista.mostrar("Has vendido la propiedad "
-                                        + modCasilla.getTitulo().getNombre());
-                            } else {
-                                vista.mostrar("No has podido vender la propiedad");
+                            if (!(modCasilla == null)) {
+                                if (juego.venderPropiedad(modCasilla)) {
+                                    vista.mostrar("Has vendido la propiedad "
+                                            + modCasilla.getTitulo().getNombre());
+                                } else {
+                                    vista.mostrar("No has podido vender la propiedad");
+                                }
                             }
                         } else {
                             vista.mostrar("Todas tus propiedades estan hipotecadas");
@@ -156,11 +166,13 @@ public class ControladorQytetet {
                     case 4:
                         if (!noHipotecadas.isEmpty()) {
                             modCasilla = elegirPropiedad(noHipotecadas);
-                            if (juego.hipotecarPropiedad(modCasilla)) {
-                                vista.mostrar("Has hipotecado la propiedad "
-                                        + modCasilla.getTitulo().getNombre());
-                            } else {
-                                vista.mostrar("No has podido hipotecar la propiedad");
+                            if (!(modCasilla == null)) {
+                                if (juego.hipotecarPropiedad(modCasilla)) {
+                                    vista.mostrar("Has hipotecado la propiedad "
+                                            + modCasilla.getTitulo().getNombre());
+                                } else {
+                                    vista.mostrar("No has podido hipotecar la propiedad");
+                                }
                             }
                         } else {
                             vista.mostrar("Todas tus propiedades estan hipotecadas");
@@ -170,11 +182,13 @@ public class ControladorQytetet {
                     case 5:
                         if (!Hipotecadas.isEmpty()) {
                             modCasilla = elegirPropiedad(Hipotecadas);
-                            if (juego.cancelarHipoteca(modCasilla)) {
-                                vista.mostrar("Has cancelado la hipoteca de "
-                                        + modCasilla.getTitulo().getNombre());
-                            } else {
-                                vista.mostrar("No has podido cancelar la hipoteca");
+                            if (!(modCasilla == null)) {
+                                if (juego.cancelarHipoteca(modCasilla)) {
+                                    vista.mostrar("Has cancelado la hipoteca de "
+                                            + modCasilla.getTitulo().getNombre());
+                                } else {
+                                    vista.mostrar("No has podido cancelar la hipoteca");
+                                }
                             }
                         } else {
                             vista.mostrar("No tienes propiedades hipotecadas");
@@ -217,10 +231,13 @@ public class ControladorQytetet {
     }
 
     private void estadoActual() {
-        vista.mostrar("\nJugador actual: " + jugador.toString()
+        vista.mostrar("**-JUGADOR-**"
+                + "\nNombre: " + jugador.getNombre()
                 + "\nCasilla actual: " + casilla.getNumeroCasilla()
                 + "\nEncarcelado: " + jugador.isEncarcelado()
-                + "\nSaldo actual: " + jugador.getSaldo());
+                + "\nCarta libertad: " + jugador.tengoCartaLibertad()
+                + "\nSaldo actual: " + jugador.getSaldo()
+        );
         if (this.bancarrota()) {
             this.gameOver();
         }
@@ -262,7 +279,11 @@ public class ControladorQytetet {
             listaPropiedades.add("\t" + casilla.getNumeroCasilla() + "\t" + casilla.getTitulo().getNombre());
         }
         seleccion = vista.menuElegirPropiedad(listaPropiedades);
-        return propiedades.get(seleccion);
+        if (seleccion == listaPropiedades.size()) {
+            return null;
+        } else {
+            return propiedades.get(seleccion);
+        }
     }
 
 }

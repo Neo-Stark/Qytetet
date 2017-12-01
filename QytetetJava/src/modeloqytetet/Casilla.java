@@ -77,24 +77,6 @@ public class Casilla {
         this.numCasas = numCasas;
     }
 
-    @Override
-    public String toString() {
-        String s = "Casilla{numeroCasilla=" + numeroCasilla
-                + "\n\ttipo=" + tipo;
-        if (titulo != null) {
-            s += "\n\tcoste=" + coste
-                    + "\n\tnumHoteles=" + numHoteles
-                    + "\n\tnumCasas=" + numCasas
-                    + "\n\t" + titulo;
-            if (titulo.tengoPropietario()) {
-                s += "\n\tPropietario: " + titulo.getPropietario().getNombre();
-            } else {
-                s += "\n\tNo tiene propietario";
-            }
-        }
-        return s;
-    }
-
     TituloPropiedad asignarPropietario(Jugador jugador) {
         titulo.setPropietario(jugador);
         return titulo;
@@ -107,8 +89,8 @@ public class Casilla {
 
     int cancelarHipoteca() {
         titulo.setHipotecada(false);
-        int precio = (int) (1.1*calcularValorHipoteca());
-        return  precio;
+        int precio = (int) (1.1 * calcularValorHipoteca());
+        return precio;
     }
 
     int cobrarAlquiler() {
@@ -166,7 +148,7 @@ public class Casilla {
 
     int venderTitulo() {
         int precioCompra = coste + (numCasas + numHoteles) * titulo.getPrecioEdificar();
-        int precioVenta = precioCompra + (int) titulo.getFactorRevalorizacion() * precioCompra;
+        int precioVenta = (int) (titulo.getFactorRevalorizacion() * precioCompra);
 
         titulo.setPropietario(null);
         setNumCasas(0);
@@ -175,4 +157,22 @@ public class Casilla {
         return precioVenta;
     }
 
+    @Override
+    public String toString() {
+        String s = "Casilla:"
+                + "\n\tnumeroCasilla=" + numeroCasilla
+                + "\n\ttipo=" + tipo;
+        if (titulo != null) {
+            s += "\n\tcoste=" + coste
+                    + "\n\tnumHoteles=" + numHoteles
+                    + "\n\tnumCasas=" + numCasas
+                    + "\n\t" + titulo;
+            if (titulo.tengoPropietario()) {
+                s += "\n\tPropietario: " + titulo.getPropietario().getNombre();
+            } else {
+                s += "\n\tNo tiene propietario";
+            }
+        }
+        return s;
+    }
 }

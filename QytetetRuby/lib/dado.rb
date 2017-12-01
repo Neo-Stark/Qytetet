@@ -3,10 +3,10 @@
 # and open the template in the editor.
 
 module ModeloQytetet
+  require 'singleton'
   class Dado
     include Singleton
-    def initialize
-      
+    def initialize     
     end
     def tirar()
       rand(1..6)

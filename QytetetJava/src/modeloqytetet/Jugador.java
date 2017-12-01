@@ -177,7 +177,7 @@ public class Jugador {
         return esMia && !hipotecada;
     }
 
-    boolean tengoCartaLibertad() {
+    public boolean tengoCartaLibertad() {
         return cartaLibertad != null;
     }
 

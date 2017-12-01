@@ -13,7 +13,8 @@ module ModeloQytetet
     def to_s
       string = ""
       @casillas.each { |c| string += c.to_s }
-      string
+      "Tablero: #{string}" \
+        "\n\tNumero total de casillas= #{@casillas.size}"
     end
     private
     def inicializar
@@ -58,7 +59,7 @@ module ModeloQytetet
       casilla.eq(@carcel.numero_casilla)
     end
     def obtener_casilla_numero(casilla)
-      @casillas[casilla]
+      @casillas.at(casilla)
     end
     def obtener_nueva_casilla(casilla, desplazamiento)
       index = (casilla.numero_casilla + desplazamiento) % 20

@@ -89,12 +89,13 @@ public class TituloPropiedad {
 
     @Override
     public String toString() {
-        return "Titulo propiedad{nombre=" + nombre
-                + "\n\t\thipotecada=" + hipotecada
-                + "\n\t\talquiler base= " + alquilerBase
-                + "\n\t\tfactor revalorizado=" + factorRevalorizacion
-                + "\n\t\thipoteca base" + hipotecaBase
-                + "\n\t\tprecio edificar=" + precioEdificar + "}";
+        return "Titulo propiedad: "
+                + "\n\t\tnombre=" + nombre
+                + "\n\t\tHipotecada=" + hipotecada
+                + "\n\t\tAlquiler base= " + alquilerBase
+                + "\n\t\tFactor revalorizacion=" + factorRevalorizacion
+                + "\n\t\tHipoteca base" + hipotecaBase
+                + "\n\t\tPrecio edificar=" + precioEdificar;
     }
 
 }

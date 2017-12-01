@@ -2,3 +2,4 @@
 QytetetJava/build/
 *.xml
 *.class
+/QytetetJava/dist/

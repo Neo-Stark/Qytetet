@@ -249,7 +249,7 @@ public class Qytetet {
         boolean tienePropietario = false;
         valorDado = dado.tirar();
         Casilla casillaPosicion = jugadorActual.getCasillaActual();
-        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, valorDado);
+        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, 3);
         tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);
 
         if (!nuevaCasilla.soyEdificable()) {

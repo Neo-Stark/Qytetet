@@ -28,8 +28,8 @@ module ModeloQytetet
     end
     def inspeccionar
       @casillas.each { |casilla| 
-      if casilla.titulo != nil
-        puts casilla.titulo.nombre
+      if casilla.titulo_propiedad != nil
+        puts casilla.titulo_propiedad.nombre
       end
       }
     end
