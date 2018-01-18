@@ -34,13 +34,14 @@ module InterfazTextualQytetet
       end
       valido
     end
-
+#EXAMEN-INICIO
     def menu_gestion_inmobiliaria
       mostrar('Elige la gestion inmobiliaria que deseas hacer')
       menu_gi = [[0, 'Siguiente Jugador'], [1, 'Edificar casa'],
         [2, 'Edificar Hotel'], [3, 'Vender propiedad'],
-        [4, 'Hipotecar Propiedad'], [5, 'Cancelar Hipoteca']]
-
+        [4, 'Hipotecar Propiedad'], [5, 'Cancelar Hipoteca'],
+        [6, 'Irme a vivir a Cancun']]
+#EXAMEN-FIN
       salida = seleccion_menu(menu_gi)
       mostrar('has elegido')
       mostrar(salida)

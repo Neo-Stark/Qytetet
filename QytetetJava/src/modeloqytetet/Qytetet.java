@@ -2,29 +2,33 @@ package modeloqytetet;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 import java.util.Map;
-import java.util.Random;
 
 public class Qytetet {
 
-    public final int MAX_JUGADORES = 4;
-    public final int MAX_CARTAS = 10;
-    public final int MAX_CASILLAS = 20;
-    public final int PRECIO_LIBERTAD = 200;
-    public final int SALDO_SALIDA = 1000;
+    public final int MAX_JUGADORES;
+    public final int MAX_CARTAS;
+    public final int MAX_CASILLAS;
+    public final int PRECIO_LIBERTAD;
+    public final int SALDO_SALIDA;
     private static final Qytetet instance = new Qytetet();
     private Dado dado;
     private Sorpresa cartaActual;
-    private ArrayList<Sorpresa> mazo = new ArrayList();
-    private ArrayList<Jugador> jugadores = new ArrayList();
+    private ArrayList<Sorpresa> mazo;
+    private ArrayList<Jugador> jugadores;
     private Jugador jugadorActual;
     private Tablero tablero;
     private int valorDado;
 
     private Qytetet() {
+        this.MAX_JUGADORES = 4;
+        this.MAX_CARTAS = 10;
+        this.MAX_CASILLAS = 20;
+        this.SALDO_SALIDA = 1000;
+        this.PRECIO_LIBERTAD = 200;
+        this.mazo = new ArrayList();
+        this.jugadores = new ArrayList();
         dado = Dado.getInstancia();
         cartaActual = null;
         valorDado = 0;
@@ -47,13 +51,14 @@ public class Qytetet {
     }
 
     private void inicializarCartasSorpresa() {
-        mazo.add(new Sorpresa("Se han limpiado tus delitos de la base de datos de la policia. Sales de la cárcel",
-                0, TipoSorpresa.SALIRCARCEL));
+        mazo.add(new Sorpresa("Bonita cuenta en Suiza, ahora eres un especulador", 5000, TipoSorpresa.CONVERTIRME));
         mazo.add(new Sorpresa("Te hemos pillado hackeando los servidores de la UGR, vas directamente a la carcel",
                 tablero.getCarcel().getNumeroCasilla(), TipoSorpresa.IRACASILLA));
+        mazo.add(new Sorpresa("Decides ir de compras, vas en metro a Recogidas", 19, TipoSorpresa.IRACASILLA));
+        mazo.add(new Sorpresa("Se han limpiado tus delitos de la base de datos de la policia. Sales de la cárcel",
+                0, TipoSorpresa.SALIRCARCEL));
         mazo.add(new Sorpresa("Has ganado un viaje un viaje a Las Vegas, pero lo vendes porque prefieres seguir programando",
                 800, TipoSorpresa.PAGARCOBRAR));
-        mazo.add(new Sorpresa("Decides ir de compras, vas en metro a Recogidas", 19, TipoSorpresa.IRACASILLA));
         mazo.add(new Sorpresa("Un huracán ha arrasado con todos tus hoteles, pagas 300 por cada casa y hotel.", 100, TipoSorpresa.PORCASAHOTEL));
         mazo.add(new Sorpresa("Un magnate del petroleo ha decidido invertir en tus propiedades, "
                 + "obtienes 400 por cada casa y hotel", 400, TipoSorpresa.PORCASAHOTEL));
@@ -63,7 +68,8 @@ public class Qytetet {
                 + "tu gran hazaña", -200, TipoSorpresa.PORJUGADOR));
         mazo.add(new Sorpresa("Tienes ganas de salir de fiesta, vas a Pedro Antonio", 8, TipoSorpresa.IRACASILLA));
         mazo.add(new Sorpresa("Anoche te pasaste con la juerga, te has dejado 750 en una noche", 750, TipoSorpresa.PAGARCOBRAR));
-        Collections.shuffle(mazo);
+        mazo.add(new Sorpresa("Te ha llegado un sobre con una tarjeta negra, eres un nuevo especulador", 3000, TipoSorpresa.CONVERTIRME));
+//        Collections.shuffle(mazo);
     }
 
     private void inicializarJugadores(ArrayList<String> nombres) {
@@ -120,7 +126,7 @@ public class Qytetet {
         boolean puedoEdificar = false;
         boolean sePuedeEdificar = false;
         if (casilla.soyEdificable()) {
-            sePuedeEdificar = casilla.sePuedeEdificarCasa();
+            sePuedeEdificar = casilla.sePuedeEdificarCasa(jugadorActual.factorEspeculador);
             if (sePuedeEdificar) {
                 puedoEdificar = jugadorActual.puedoEdificar(casilla);
                 if (puedoEdificar) {
@@ -135,7 +141,7 @@ public class Qytetet {
         boolean puedoEdificar = false;
         boolean sePuedeEdificar = false;
         if (casilla.soyEdificable()) {
-            sePuedeEdificar = casilla.sePuedeEdificarHotel();
+            sePuedeEdificar = casilla.sePuedeEdificarHotel(jugadorActual.factorEspeculador);
             if (sePuedeEdificar) {
                 puedoEdificar = jugadorActual.puedoEdificar(casilla);
                 if (puedoEdificar) {
@@ -209,6 +215,9 @@ public class Qytetet {
                         }
                     }
                     break;
+                case CONVERTIRME:
+                    jugadorActual = jugadorActual.convertirme(valor);
+                    break;
                 default:
                     break;
             }
@@ -234,10 +243,10 @@ public class Qytetet {
     public boolean intentarSalirCarcel(MetodoSalirCarcel metodo) {
         boolean libre = false;
         if (metodo == MetodoSalirCarcel.TIRANDODADO) {
-            int valorDado = dado.tirar();
+            valorDado = dado.tirar();
             libre = valorDado > 4;
         } else if (metodo == MetodoSalirCarcel.PAGANDOLIBERTAD) {
-            libre = jugadorActual.pagarLibertad(-PRECIO_LIBERTAD);
+            libre = jugadorActual.pagarLibertad(PRECIO_LIBERTAD);
         }
         if (libre) {
             jugadorActual.setEncarcelado(false);
@@ -249,7 +258,7 @@ public class Qytetet {
         boolean tienePropietario = false;
         valorDado = dado.tirar();
         Casilla casillaPosicion = jugadorActual.getCasillaActual();
-        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, 3);
+        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, 7);
         tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);
 
         if (!nuevaCasilla.soyEdificable()) {

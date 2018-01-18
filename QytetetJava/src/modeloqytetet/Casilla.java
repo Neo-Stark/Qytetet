@@ -12,19 +12,7 @@ public class Casilla {
     private int numHoteles;
     private int numCasas;
     private TipoCasilla tipo;
-    private TituloPropiedad titulo;
 
-    public Casilla(int numeroCasilla, int coste, TipoCasilla tipo, TituloPropiedad titulo) {
-        this.numeroCasilla = numeroCasilla;
-        this.coste = coste;
-        this.numHoteles = 0;
-        this.numCasas = 0;
-        this.tipo = tipo;
-        this.titulo = titulo;
-        titulo.setCasilla(this);
-    }
-
-    //El constructor para las casillas que no son de tipo calle
     public Casilla(int numeroCasilla, int coste, TipoCasilla tipo) {
         this.numeroCasilla = numeroCasilla;
         this.coste = coste;
@@ -37,10 +25,6 @@ public class Casilla {
         return this.tipo;
     }
 
-    public TituloPropiedad getTitulo() {
-        return titulo;
-    }
-
     public int getCoste() {
         return this.coste;
     }
@@ -49,13 +33,6 @@ public class Casilla {
         return numeroCasilla;
     }
 
-    public int getNumHoteles() {
-        return numHoteles;
-    }
-
-    public int getNumCasas() {
-        return numCasas;
-    }
 
     public int getCosteHipoteca() {
         throw new UnsupportedOperationException("Sin implementar");
@@ -124,12 +101,12 @@ public class Casilla {
         return titulo.propietarioEncarcelado();
     }
 
-    boolean sePuedeEdificarCasa() {
-        return numCasas < 4;
+    boolean sePuedeEdificarCasa(int factorEspeculador) {
+        return numCasas < 4 * factorEspeculador;
     }
 
-    boolean sePuedeEdificarHotel() {
-        return numHoteles < 4 && numCasas == 4;
+    boolean sePuedeEdificarHotel(int factorEspeculador) {
+        return numHoteles < 4 * factorEspeculador && numCasas == 4 * factorEspeculador;
     }
 
     boolean soyEdificable() {

@@ -18,6 +18,13 @@ module InterfazTextualQytetet
       @juego.inicializar_juego(@vista.obtener_nombre_jugadores)
       @jugador = @juego.jugador_actual
       @casilla = @juego.jugador_actual.casilla_actual
+      #EXAMEN-INICIO
+      @jugador.carta_loteria = @juego.mazo.pop
+      @jugador.propiedades << @juego.tablero.obtener_casilla_numero(1).titulo_propiedad
+      @jugador.propiedades << @juego.tablero.obtener_casilla_numero(2).titulo_propiedad
+      @jugador.propiedades << @juego.tablero.obtener_casilla_numero(4).titulo_propiedad
+      @vista.mostrar("Carta loteria: #{@jugador.carta_loteria}")
+      #EXAMEN-FIN
       @vista.mostrar("Tablero: #{@juego.tablero}" \
           "\nComienza el jugador: #{@jugador}"\
           + "\nCasilla actual: #{@casilla}")
@@ -30,6 +37,7 @@ module InterfazTextualQytetet
           "\nCasilla actual: #{@casilla.numero_casilla}" \
           "\nEncarcelado: #{@jugador.encarcelado}" \
           "\nCarta libertad: #{@jugador.tengo_carta_libertad}"\
+          "\nCarta loteria: #{@jugador.tengo_carta_loteria}"\
           "\nSaldo actual: #{@jugador.saldo}" 
       );
       if bancarrota 
@@ -117,7 +125,7 @@ module InterfazTextualQytetet
         opcion = @vista.menu_gestion_inmobiliaria
         if @jugador.tengo_propiedades || opcion == 0
           propiedades = @juego.propiedades_hipotecadas_jugador(opcion == 5)
-          prop = elegir_propiedad(propiedades) unless opcion == 0
+          prop = elegir_propiedad(propiedades) unless opcion == 0 || opcion == 6
           case opcion
 #          when 0 then break
           when 1 then @juego.edificar_casa(prop)
@@ -125,6 +133,7 @@ module InterfazTextualQytetet
           when 3 then @juego.vender_propiedad(prop)
           when 4 then @juego.hipotecar_propiedad(prop)
           when 5 then @juego.cancelar_hipoteca(prop)
+          when 6 then @juego.irme_a_vivir_a_cancun
           end
         else
           @vista.mostrar('No te quedan propiedades')

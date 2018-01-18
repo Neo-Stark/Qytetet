@@ -4,7 +4,9 @@
 
 module ModeloQytetet
   class Jugador
-    attr_accessor :casilla_actual, :encarcelado, :nombre, :carta_libertad, :saldo
+    #EXAMEN-INICIO
+    attr_accessor :casilla_actual, :encarcelado, :nombre, :carta_libertad, :saldo,
+      :carta_loteria, :propiedades
     
     def initialize (nombre)
       @encarcelado = false
@@ -12,6 +14,8 @@ module ModeloQytetet
       @saldo = 0
       @casilla_actual = nil
       @carta_libertad = nil
+      @carta_loteria = nil
+      #EXAMEN-FIN
       @propiedades = Array.new
     end
     
@@ -57,6 +61,33 @@ module ModeloQytetet
       @carta_libertad = nil
       devolver_carta
     end
+    
+    #EXAMEN-INICIO
+    def devolver_carta_loteria
+      devolver_carta = @carta_loteria
+      @carta_loteria = nil
+      devolver_carta
+    end
+    
+    def tengo_carta_loteria
+      @carta_loteria != nil
+    end
+    
+    def vender_todo
+      propiedades = obtener_propiedades_hipotecadas(false)
+      
+      ganancia = 0 
+      propiedades.each { |prop|  ganancia += prop.casilla.precio_total_comprar }
+      ganancia
+    end
+    
+    def hipotecar_todo
+      propiedades = obtener_propiedades_hipotecadas(false)
+      ganancia = 0
+      propiedades.each { |prop|  ganancia += prop.casilla.calcular_valor_hipoteca}
+      ganancia
+    end
+    #EXAMEN-FIN
     
     def ir_a_carcel(carcel)
       @casilla_actual = carcel

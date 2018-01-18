@@ -25,10 +25,10 @@ public class Tablero {
                 new TituloPropiedad("Calle Periodistas", 50, 0.9f, 400, 500)));
         casillas.add(new Casilla(3, 500, TipoCasilla.IMPUESTO));
         casillas.add(new Casilla(4, 650, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Ángel Ganivet", 60, 1.1f, 150, 400)));
+                new TituloPropiedad("Calle Ángel Ganivet", 300, 1.1f, 150, 400)));
         casillas.add(new Casilla(5, 0, TipoCasilla.JUEZ));
         casillas.add(new Casilla(6, 400, TipoCasilla.CALLE,
-                new TituloPropiedad("Calle Cuesta Gomerez", 60, 1, 600, 700)));
+                new TituloPropiedad("Calle Cuesta Gomerez", 350, 1, 600, 700)));
         casillas.add(new Casilla(7, 0, TipoCasilla.SORPRESA));
         casillas.add(new Casilla(8, 550, TipoCasilla.CALLE,
                 new TituloPropiedad("Calle Pedro Antonio", 55, 1.2f, 300, 500)));

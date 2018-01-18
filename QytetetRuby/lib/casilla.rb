@@ -10,8 +10,8 @@ module ModeloQytetet
       :coste,
       :tipo
 
-    attr_accessor :num_hoteles, :num_casas, :titulo_propiedad, :titulo
-    private :titulo
+    attr_accessor :num_hoteles, :num_casas, :titulo_propiedad
+    #private :titulo
     
     def initialize(numero, coste, tipo, titulo)
       @numero_casilla = numero

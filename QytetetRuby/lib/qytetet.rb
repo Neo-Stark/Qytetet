@@ -1,7 +1,4 @@
 #encoding: UTF-8
-# To change this license header, choose License Headers in Project Properties.
-# To change this template file, choose Tools | Templates
-# and open the template in the editor.
 
 module ModeloQytetet
   require 'singleton'
@@ -14,7 +11,7 @@ module ModeloQytetet
     MAX_CARTAS = 10
     PRECIO_LIBERTAD = 200
     SALDO_SALIDA = 1000
-    attr_reader :carta_actual, :jugador_actual, :tablero, :jugadores
+    attr_reader :carta_actual, :jugador_actual, :tablero, :jugadores, :mazo
 
     def initialize
       @carta_actual = nil
@@ -24,7 +21,7 @@ module ModeloQytetet
       @dado = Dado.instance
       @tablero = nil
     end
-    
+
     def aplicar_sorpresa
       tiene_propietario = false
       case @carta_actual.tipo
@@ -44,23 +41,33 @@ module ModeloQytetet
           j.modificar_saldo(@carta_actual.valor)
           @jugador_actual.modificar_saldo(-@carta_actual.valor)
         end
-      when TipoSorpresa::SALIRCARCEL
+      end
+
+      if @carta_actual.tipo == TipoSorpresa::SALIRCARCEL
         @jugador_actual.carta_libertad = @carta_actual
       else
         @mazo << @carta_actual
       end
+      #EXAMEN-INICIO
+      if @carta_actual.tipo TipoSorpresa::LOTERIA
+        @jugador_actual.carta_loteria = @carta_actual
+      else
+        @mazo << @carta_actual
+      end
+      #EXAMEN-FIN
       tiene_propietario
     end
-    
+
     def cancelar_hipoteca(casilla)
       return false if !casilla.esta_hipotecada
       @jugador_actual.modificar_saldo(-casilla.cancelar_hipoteca)
       true
     end
+
     def comprar_titulo_propiedad
       @jugador_actual.comprar_titulo
     end
-    
+
     def edificar_casa(casilla)
       puedo_edificar = false
       if casilla.soy_edificable && casilla.se_puede_edificar_casa
@@ -175,16 +182,19 @@ module ModeloQytetet
         tu gran hazaña", 200, TipoSorpresa::PORJUGADOR)
       @mazo<< Sorpresa.new("Tienes ganas de salir de fiesta, vas a Pedro Antonio", 8, TipoSorpresa::IRACASILLA)
       @mazo<< Sorpresa.new("Anoche te pasaste con la juerga, te has dejado 750 en una noche", 750, TipoSorpresa::PAGARCOBRAR)
+      @mazo<< Sorpresa.new("Te ha tocado la lotería, disfruta de Coco Bomgo", 1000000, TipoSorpresa::LOTERIA)
+      @mazo<< Sorpresa.new("Te ha llegado un sobre con una tarjeta negra, eres un nuevo especulador", 3000, TipoSorpresa::CONVERTIRME)
+      @mazo<< Sorpresa.new("Bonita cuenta en Suiza, ahora eres un especulador", 5000, TipoSorpresa::CONVERTIRME)
     end
-    
-    def inicializar_jugadores(nombres)      
+
+    def inicializar_jugadores(nombres)
       nombres.each { |nombre| @jugadores<<Jugador.new(nombre)  }
     end
-    
+
     def inicializar_tablero
       @tablero = Tablero.new
     end
-    
+
     def salida_jugadores
       for jugador in @jugadores
         jugador.casilla_actual = @tablero.obtener_casilla_numero(0)
@@ -192,16 +202,37 @@ module ModeloQytetet
       end
       @jugador_actual = @jugadores.sample
     end
-    
+
     def inicializar_juego (nombres)
       inicializar_jugadores(nombres)
       inicializar_tablero
       inicializar_cartas_sorpresa
       salida_jugadores
     end
-    
+
+    #EXAMEN-INICIO
+    def irme_a_vivir_a_cancun
+      return false unless @jugador_actual.tengo_carta_loteria
+      ganancia_ventas = @jugador_actual.vender_todo
+      ganancia_hipotecar = @jugador_actual.hipotecar_todo
+
+      propiedades = @jugador_actual.obtener_propiedades_hipotecadas(false)
+      if ganancia_ventas > ganancia_hipotecar
+        propiedades.each { |prop|
+          @jugador_actual.vender_propiedad(prop.casilla)}
+      else
+        propiedades.each { |prop|
+          hipotecar_propiedad(prop.casilla)}
+      end
+
+      cantidad = @jugador_actual.carta_loteria.valor
+      @jugador_actual.modificar_saldo(cantidad)
+      @jugador_actual.devolver_carta_loteria
+      true
+    end
+
     private :encarcelar_jugador, :inicializar_cartas_sorpresa,
       :inicializar_jugadores, :inicializar_tablero,
       :salida_jugadores
-  end   
+  end
 end

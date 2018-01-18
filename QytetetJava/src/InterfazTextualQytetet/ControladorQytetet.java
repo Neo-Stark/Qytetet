@@ -16,11 +16,11 @@ import java.util.Map;
  */
 public class ControladorQytetet {
 
-    private static final Scanner in = new Scanner(System.in);
+    private static final Scanner IN = new Scanner(System.in);
     private Qytetet juego;
     private Jugador jugador;
     private Casilla casilla;
-    private VistaTextualQytetet vista;
+    private final VistaTextualQytetet vista;
 
     public ControladorQytetet() {
         vista = new VistaTextualQytetet();
@@ -28,20 +28,19 @@ public class ControladorQytetet {
 
     private void pausa() {
         vista.mostrar("Pulsa una tecla para continuar...");
-        in.nextLine();
+        IN.nextLine();
     }
 
     public void inicializacionJuego() {
         juego = Qytetet.getInstance();
-        ArrayList<String> nombres = new ArrayList();
-        nombres = vista.obtenerNombreJugadores();
+        ArrayList<String> nombres = vista.obtenerNombreJugadores();
         juego.inicicializarJuego(nombres);
         jugador = juego.getJugadorActual();
         casilla = juego.getJugadorActual().getCasillaActual();
 
         vista.mostrar("Tablero: " + juego.getTablero().toString()
-                + "\nComienza el jugador: " + jugador.toString()
-                + "\nCasilla actual: " + casilla.toString());
+                + "\nComienza el jugador: " + jugador.toString());
+//                + "\nCasilla actual: " + casilla.toString());
         this.pausa();
     }
 
@@ -68,10 +67,16 @@ public class ControladorQytetet {
                             this.espera();
                             juego.aplicarSorpresa();
                             if (juego.getCartaActual().getTipo() == TipoSorpresa.IRACASILLA) {
-                                vista.mostrar("Nueva casilla: " + casilla.toString());
-                            }
-                            this.estadoActual();
-//                            break; Si la sorpresa lleva al jugador a una calle, entrara en case CALLE
+                                casilla = jugador.getCasillaActual();
+                                vista.mostrar("Nueva " + casilla.toString());
+                                if (casilla.getTipo() == TipoCasilla.CARCEL) {
+                                    break;
+                                }
+                            } else {
+                                jugador = juego.getJugadorActual();
+                                this.estadoActual();
+                                break;
+                            }//Si la sorpresa lleva al jugador a una calle, entrara en case CALLE
                         case CALLE:
                             if (tienePropietario) {
                                 vista.mostrar("\nPagando alquiler...");
@@ -92,12 +97,17 @@ public class ControladorQytetet {
                 } else {
                     vista.mostrar("Has caido en la casilla del juez,"
                             + "vas directamente a la carcel.");
+                    pasaTurno();
                 }
             }
-            if (jugador.tengoPropiedades() && !jugador.isEncarcelado()) {
+            if (!jugador.isEncarcelado()){
+            if (jugador.tengoPropiedades()){
                 gestionInmobiliaria();
             } else {
                 vista.mostrar("No tienes propiedades");
+            }
+            }else{
+                vista.mostrar("Estas en la carcel");
             }
 //            this.estadoActual();
             pasaTurno();
@@ -232,7 +242,7 @@ public class ControladorQytetet {
 
     private void estadoActual() {
         vista.mostrar("**-JUGADOR-**"
-                + "\nNombre: " + jugador.getNombre()
+                + "\nNombre: " + jugador
                 + "\nCasilla actual: " + casilla.getNumeroCasilla()
                 + "\nEncarcelado: " + jugador.isEncarcelado()
                 + "\nCarta libertad: " + jugador.tengoCartaLibertad()
@@ -247,7 +257,7 @@ public class ControladorQytetet {
     private void espera() {
         try {
             Thread.sleep(1000);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             System.out.println("Continuando...");
         }
     }
@@ -258,6 +268,7 @@ public class ControladorQytetet {
 
         if (eleccion == 0) {
             libre = juego.intentarSalirCarcel(MetodoSalirCarcel.TIRANDODADO);
+            vista.mostrar("Valor dado: " + juego.getValorDado());
         } else {
             libre = juego.intentarSalirCarcel(MetodoSalirCarcel.PAGANDOLIBERTAD);
         }

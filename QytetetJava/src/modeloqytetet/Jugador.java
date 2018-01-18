@@ -13,20 +13,43 @@ import java.util.ArrayList;
  */
 public class Jugador {
 
-    private boolean encarcelado = false;
+    private boolean encarcelado;
     private String nombre;
     private int saldo;
     private Sorpresa cartaLibertad;
     private ArrayList<TituloPropiedad> propiedades;
     private Casilla casillaActual;
+    static int factorEspeculador = 1;
 
     public Jugador(String nombre) {
+        this.encarcelado = false;
         propiedades = new ArrayList<>();
         this.nombre = nombre;
         this.cartaLibertad = null;
         this.casillaActual = null;
         this.saldo = 0;
     }
+    
+    protected Jugador(Jugador jugador){
+        this.encarcelado = false;
+        this.nombre         = jugador.nombre;
+        this.propiedades    = jugador.propiedades;
+        this.cartaLibertad  = jugador.cartaLibertad;
+        this.casillaActual  = jugador.casillaActual;
+        this.saldo          = jugador.saldo;
+        this.encarcelado    = jugador.encarcelado;
+    }
+    
+    protected void pagarImpuestos(int cantidad){
+        modificarSaldo(-cantidad);
+    }
+    
+    protected Especulador convertirme(int fianza){
+        System.out.println("me convierto en especulador");
+        return new Especulador(this, fianza);
+    }
+    
+    
 
     public String getNombre() {
         return nombre;
@@ -36,7 +59,7 @@ public class Jugador {
         return saldo;
     }
 
-    boolean actualizarPosicion(Casilla casilla) {
+    protected boolean actualizarPosicion(Casilla casilla) {
         boolean tengoPropietario = false;
         if (casilla.getNumeroCasilla() < casillaActual.getNumeroCasilla()) {
             modificarSaldo(Qytetet.getInstance().SALDO_SALIDA);
@@ -52,7 +75,7 @@ public class Jugador {
                 }
             }
         } else if (casilla.getTipo() == TipoCasilla.IMPUESTO) {
-            modificarSaldo(-casilla.getCoste());
+            pagarImpuestos(casilla.getCoste());
         }
 
         return tengoPropietario;
@@ -144,7 +167,7 @@ public class Jugador {
     boolean pagarLibertad(int cantidad) {
         boolean tengoSaldo = tengoSaldo(cantidad);
         if (tengoSaldo) {
-            modificarSaldo(cantidad);
+            modificarSaldo(-cantidad);
         }
         return tengoSaldo;
     }

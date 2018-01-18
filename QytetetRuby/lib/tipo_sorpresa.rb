@@ -8,7 +8,8 @@ module ModeloQytetet
     PORCASAHOTEL = :PorCasaHotel
     PORJUGADOR = :PorJugador
     SALIRCARCEL = :SalirCarcel
-    
+    LOTERIA = :Loteria
+    CONVERTIRME = :Convertirme
   end
 
 end
