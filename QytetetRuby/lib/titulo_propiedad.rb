@@ -35,8 +35,5 @@ module ModeloQytetet
     def tengo_propietario
       @propietario != nil
     end
-    def set_casilla(casilla)
-      @casilla = casilla
-    end
   end
 end

@@ -5,6 +5,7 @@
 module InterfazTextualQytetet
   require_relative 'qytetet'
   require_relative 'vista_textual_qytetet.rb'
+  
   class ControladorQytetet
     def initialize
       @juego = nil
@@ -33,7 +34,7 @@ module InterfazTextualQytetet
     
     def estado_actual
       @vista.mostrar("**-JUGADOR-**"\
-          "\nNombre: #{@jugador.nombre}" \
+          "\nNombre: #{@jugador}" \
           "\nCasilla actual: #{@casilla.numero_casilla}" \
           "\nEncarcelado: #{@jugador.encarcelado}" \
           "\nCarta libertad: #{@jugador.tengo_carta_libertad}"\
@@ -77,7 +78,10 @@ module InterfazTextualQytetet
             when ModeloQytetet::TipoCasilla::SORPRESA
               @vista.mostrar("#{@juego.carta_actual}\nAplicando Sorpresa...")
               @juego.aplicar_sorpresa
-              if @juego.carta_actual == TipoSorpresa::IRACASILLA
+              @jugador = @juego.jugador_actual #Si el jugador se ha convertido en especulador
+              estado_actual
+              if @juego.carta_actual == ModeloQytetet::TipoSorpresa::IRACASILLA
+                @casilla = @jugador.casilla_actual
                 @vista.mostrar "Nueva casilla: #{@casilla}"
               end
             when ModeloQytetet::TipoCasilla::CALLE
@@ -125,6 +129,8 @@ module InterfazTextualQytetet
         opcion = @vista.menu_gestion_inmobiliaria
         if @jugador.tengo_propiedades || opcion == 0
           propiedades = @juego.propiedades_hipotecadas_jugador(opcion == 5)
+          propiedades.each{|p| puts p}
+          pausa
           prop = elegir_propiedad(propiedades) unless opcion == 0 || opcion == 6
           case opcion
 #          when 0 then break
@@ -135,6 +141,7 @@ module InterfazTextualQytetet
           when 5 then @juego.cancelar_hipoteca(prop)
           when 6 then @juego.irme_a_vivir_a_cancun
           end
+          @vista.mostrar(prop)
         else
           @vista.mostrar('No te quedan propiedades')
         end

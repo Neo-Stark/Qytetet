@@ -16,7 +16,7 @@ public class Especulador extends Jugador {
     protected Especulador(Jugador jugador, int fianza) {
         super(jugador);
         this.fianza = fianza;
-        Especulador.factorEspeculador = 2;
+        factorEspeculador = 2;
     }
 
     @Override
@@ -42,5 +42,10 @@ public class Especulador extends Jugador {
     @Override
     public String toString(){
         return super.toString() + " (Especulador)";
+    }
+    
+    @Override
+    public int getFactorEspeculador(){
+        return factorEspeculador;
     }
 }

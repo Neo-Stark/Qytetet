@@ -85,7 +85,7 @@ public class ControladorQytetet {
                                 if (vista.elegirQuieroComprar() == 0) {
                                     if (juego.comprarTituloPropiedad()) {
                                         vista.mostrar("\nHas comprado el Titulo de propiedad: "
-                                                + casilla.getTitulo().getNombre());
+                                                + ((Calle)casilla).getTitulo().getNombre());
                                     } else {
                                         vista.mostrar("\nNo puedes comprar la propiedad");
                                     }
@@ -131,7 +131,7 @@ public class ControladorQytetet {
                             if (!(modCasilla == null)) {
                                 if (juego.edificarCasa(modCasilla)) {
                                     vista.mostrar("Has edificado una casa en "
-                                            + modCasilla.getTitulo().getNombre());
+                                            + ((Calle)modCasilla).getTitulo().getNombre());
                                 } else {
                                     vista.mostrar("No has podido edificar la casa.");
                                 }
@@ -147,7 +147,7 @@ public class ControladorQytetet {
                             if (!(modCasilla == null)) {
                                 if (juego.edificarHotel(modCasilla)) {
                                     vista.mostrar("Has edificado un hotel en "
-                                            + modCasilla.getTitulo().getNombre());
+                                            + ((Calle)modCasilla).getTitulo().getNombre());
                                 } else {
                                     vista.mostrar("No has podido edificar el hotel.");
                                 }
@@ -163,7 +163,7 @@ public class ControladorQytetet {
                             if (!(modCasilla == null)) {
                                 if (juego.venderPropiedad(modCasilla)) {
                                     vista.mostrar("Has vendido la propiedad "
-                                            + modCasilla.getTitulo().getNombre());
+                                            + ((Calle)modCasilla).getTitulo().getNombre());
                                 } else {
                                     vista.mostrar("No has podido vender la propiedad");
                                 }
@@ -179,7 +179,7 @@ public class ControladorQytetet {
                             if (!(modCasilla == null)) {
                                 if (juego.hipotecarPropiedad(modCasilla)) {
                                     vista.mostrar("Has hipotecado la propiedad "
-                                            + modCasilla.getTitulo().getNombre());
+                                            + ((Calle)modCasilla).getTitulo().getNombre());
                                 } else {
                                     vista.mostrar("No has podido hipotecar la propiedad");
                                 }
@@ -195,7 +195,7 @@ public class ControladorQytetet {
                             if (!(modCasilla == null)) {
                                 if (juego.cancelarHipoteca(modCasilla)) {
                                     vista.mostrar("Has cancelado la hipoteca de "
-                                            + modCasilla.getTitulo().getNombre());
+                                            + ((Calle)modCasilla).getTitulo().getNombre());
                                 } else {
                                     vista.mostrar("No has podido cancelar la hipoteca");
                                 }
@@ -286,9 +286,9 @@ public class ControladorQytetet {
         vista.mostrar("\tCasilla\tTitulo");
         int seleccion;
         ArrayList<String> listaPropiedades = new ArrayList();
-        for (Casilla casilla : propiedades) {
-            listaPropiedades.add("\t" + casilla.getNumeroCasilla() + "\t" + casilla.getTitulo().getNombre());
-        }
+        propiedades.forEach((c) -> {
+            listaPropiedades.add("\t" + c.getNumeroCasilla() + "\t" + ((Calle)c).getTitulo().getNombre());
+        });
         seleccion = vista.menuElegirPropiedad(listaPropiedades);
         if (seleccion == listaPropiedades.size()) {
             return null;

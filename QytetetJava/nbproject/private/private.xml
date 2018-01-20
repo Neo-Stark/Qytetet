@@ -6,8 +6,9 @@
             <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/modeloqytetet/Qytetet.java</file>
             <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/modeloqytetet/TituloPropiedad.java</file>
             <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/modeloqytetet/Jugador.java</file>
-            <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/modeloqytetet/Tablero.java</file>
-            <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/modeloqytetet/Casilla.java</file>
+            <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/modeloqytetet/Calle.java</file>
+            <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/InterfazTextualQytetet/ControladorQytetet.java</file>
+            <file>file:/home/fran/Universidad/PDOO/Qytetet/QytetetJava/src/modeloqytetet/Dado.java</file>
         </group>
     </open-files>
 </project-private>

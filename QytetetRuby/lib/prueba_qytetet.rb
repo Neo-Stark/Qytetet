@@ -4,9 +4,14 @@ module ModeloQytetet
   require_relative "tipo_sorpresa"
   require_relative "tablero"
   require_relative "jugador"
+  require_relative 'casilla'
+  require_relative 'especulador'
   require_relative "inspector"
   require_relative "qytetet"
   require_relative "controlador_qytetet.rb"
+  require_relative 'dado'
+  require_relative 'calle'
+  require_relative 'titulo_propiedad'
   class PruebaQytetet
     def self.main()
       #      juego = Qytetet.instance

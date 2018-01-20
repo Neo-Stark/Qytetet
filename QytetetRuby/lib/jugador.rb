@@ -8,7 +8,7 @@ module ModeloQytetet
     attr_accessor :casilla_actual, :encarcelado, :nombre, :carta_libertad, :saldo,
       :carta_loteria, :propiedades
     
-    def initialize (nombre)
+    def initialize(nombre)
       @encarcelado = false
       @nombre = nombre
       @saldo = 0
@@ -19,8 +19,20 @@ module ModeloQytetet
       @propiedades = Array.new
     end
     
+    def convertirme(fianza)
+      Especulador.new(self,fianza)
+    end
+    
+#    def clonar (jugador)
+#      self = jugador.clone
+#    end
+    
     def tengo_propiedades
       @propiedades.any?
+    end
+    
+    def pagar_impuestos(cantidad)
+      modificar_saldo(-cantidad)
     end
     
     def actualizar_posicion(casilla)
@@ -34,7 +46,7 @@ module ModeloQytetet
           modificar_saldo(-casilla.cobrar_alquiler)
           return true
         end
-        modificar_saldo(-casilla.coste) if casilla.tipo == TipoCasilla::IMPUESTO
+        pagar_impuestos(casilla.valor) if casilla.tipo == TipoCasilla::IMPUESTO
       end
       false
     end
@@ -74,17 +86,17 @@ module ModeloQytetet
     end
     
     def vender_todo
-      propiedades = obtener_propiedades_hipotecadas(false)
+      propiedades_no_hipetacadas = obtener_propiedades_hipotecadas(false)
       
       ganancia = 0 
-      propiedades.each { |prop|  ganancia += prop.casilla.precio_total_comprar }
+      propiedades_no_hipetacadas.each { |prop|  ganancia += prop.casilla.precio_total_comprar }
       ganancia
     end
     
     def hipotecar_todo
-      propiedades = obtener_propiedades_hipotecadas(false)
+      propiedades_no_hipetacadas = obtener_propiedades_hipotecadas(false)
       ganancia = 0
-      propiedades.each { |prop|  ganancia += prop.casilla.calcular_valor_hipoteca}
+      propiedades_no_hipetacadas.each { |prop|  ganancia += prop.casilla.calcular_valor_hipoteca}
       ganancia
     end
     #EXAMEN-FIN
@@ -130,11 +142,11 @@ module ModeloQytetet
     end
     
     def puedo_edificar_casa(casilla)
-      casilla.se_puede_edificar_casa && @saldo > casilla.titulo_propiedad.precio_edificar
+       @saldo > casilla.titulo_propiedad.precio_edificar
     end
     
     def puedo_edificar_hotel(casilla)
-      casilla.se_puede_edificar_hotel && @saldo > casilla.titulo_propiedad.precio_edificar
+       @saldo > casilla.titulo_propiedad.precio_edificar
     end
     
     def puedo_hipotecar(casilla)
@@ -179,6 +191,10 @@ module ModeloQytetet
     
     def tengo_saldo(cantidad)
       @saldo >= cantidad
+    end
+    
+    def factor_especulador
+      1
     end
     
     def to_s

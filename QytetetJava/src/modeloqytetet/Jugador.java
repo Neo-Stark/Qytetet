@@ -68,10 +68,10 @@ public class Jugador {
         setCasillaActual(casilla);
 
         if (casilla.soyEdificable()) {
-            if (casilla.tengoPropietario()) {
+            if (((Calle)casilla).tengoPropietario()) {
                 tengoPropietario = true;
-                if (!casilla.propietarioEncarcelado()) {
-                    modificarSaldo(-casilla.cobrarAlquiler());
+                if (!((Calle)casilla).propietarioEncarcelado()) {
+                    modificarSaldo(-((Calle)casilla).cobrarAlquiler());
                 }
             }
         } else if (casilla.getTipo() == TipoCasilla.IMPUESTO) {
@@ -108,9 +108,9 @@ public class Jugador {
     boolean comprarTitulo() {
         boolean puedoComprar = false;
         if (casillaActual.soyEdificable()) {
-            if (!casillaActual.tengoPropietario()) {
+            if (!((Calle)casillaActual).tengoPropietario()) {
                 if (tengoSaldo(casillaActual.getCoste())) {
-                    propiedades.add(casillaActual.asignarPropietario(this));
+                    propiedades.add(((Calle)casillaActual).asignarPropietario(this));
                     modificarSaldo(-casillaActual.getCoste());
                     puedoComprar = true;
                 }
@@ -152,8 +152,8 @@ public class Jugador {
             if (precio.getHipotecada() == true) {
                 PrecioInmuebles -= precio.getHipotecaBase();
             }
-            PrecioInmuebles += precio.getPrecioEdificar() * precio.getCasilla().getNumCasas();
-            PrecioInmuebles += precio.getPrecioEdificar() * precio.getCasilla().getNumHoteles();
+            PrecioInmuebles += precio.getPrecioEdificar() * ((Calle)precio.getCasilla()).getNumCasas();
+            PrecioInmuebles += precio.getPrecioEdificar() * ((Calle)precio.getCasilla()).getNumHoteles();
             PrecioInmuebles += precio.getCasilla().getCoste();
         }
         return saldo + PrecioInmuebles;
@@ -177,7 +177,7 @@ public class Jugador {
         boolean tengoSaldo = false;
 
         if (esMia) {
-            tengoSaldo = tengoSaldo(casilla.getPrecioEdificar());
+            tengoSaldo = tengoSaldo(((Calle)casilla).getPrecioEdificar());
         }
 
         return esMia && tengoSaldo;
@@ -191,12 +191,12 @@ public class Jugador {
     }
 
     boolean puedoPagarHipoteca(Casilla casilla) {
-        return tengoSaldo((int) (1.1*casilla.calcularValorHipoteca()));
+        return tengoSaldo((int) (1.1*((Calle)casilla).calcularValorHipoteca()));
     }
 
     boolean puedoVenderPropiedad(Casilla casilla) {
         boolean esMia = esDeMiPropiedad(casilla);
-        boolean hipotecada = casilla.estaHipotecada();
+        boolean hipotecada = ((Calle)casilla).estaHipotecada();
         return esMia && !hipotecada;
     }
 
@@ -205,7 +205,7 @@ public class Jugador {
     }
 
     void venderPropiedad(Casilla casilla) {
-        int precioVenta = casilla.venderTitulo();
+        int precioVenta = ((Calle)casilla).venderTitulo();
         modificarSaldo(precioVenta);
         eliminarDeMisPropiedades(casilla);
     }
@@ -213,20 +213,20 @@ public class Jugador {
     int cuantasCasasHotelesTengo() {
         int inmuebles = 0;
         for (TituloPropiedad inmueble : propiedades) {
-            inmuebles += inmueble.getCasilla().getNumCasas();
-            inmuebles += inmueble.getCasilla().getNumHoteles();
+            inmuebles += ((Calle)inmueble.getCasilla()).getNumCasas();
+            inmuebles += ((Calle)inmueble.getCasilla()).getNumHoteles();
 
         }
         return inmuebles;
     }
 
     void eliminarDeMisPropiedades(Casilla casilla) {
-        int numero = propiedades.indexOf(casilla.getTitulo());
+        int numero = propiedades.indexOf(((Calle)casilla).getTitulo());
         propiedades.remove(numero);
     }
 
     boolean esDeMiPropiedad(Casilla casilla) {
-        return propiedades.contains(casilla.getTitulo());
+        return propiedades.contains(((Calle)casilla).getTitulo());
     }
 
     boolean tengoSaldo(int cantidad) {
@@ -235,6 +235,10 @@ public class Jugador {
             miSaldo = true;
         }
         return miSaldo;
+    }
+    
+    public int getFactorEspeculador(){
+        return factorEspeculador;
     }
 
     @Override

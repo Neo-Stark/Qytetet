@@ -1,9 +1,9 @@
 #encoding: UTF-8
 
 module ModeloQytetet
-  require_relative "casilla"
-  require_relative "tipo_casilla"
-  require_relative "titulo_propiedad"
+#  require_relative "casilla"
+#  require_relative "tipo_casilla"
+#  require_relative "titulo_propiedad"
   class Tablero
     attr_reader :carcel
     def initialize
@@ -19,37 +19,37 @@ module ModeloQytetet
     private
     def inicializar
       @casillas = Array.new
-      @casillas<< Casilla.crear_casilla(0, 0, TipoCasilla::SALIDA)
-      @casillas<< Casilla.crear_calle(1, 450, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(0, 0, TipoCasilla::SALIDA)
+      @casillas<< Calle.new(1, 450,  
         TituloPropiedad.new("Calle San Jerónimo", 50, 0.5, 150, 250))
-      @casillas<< Casilla.crear_calle(2, 500, TipoCasilla::CALLE, 
+      @casillas<< Calle.new(2, 500,  
         TituloPropiedad.new("Calle Periodistas", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_casilla(3, 200, TipoCasilla::IMPUESTO)
-      @casillas<< Casilla.crear_calle(4, 600, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(3, 200, TipoCasilla::IMPUESTO)
+      @casillas<< Calle.new(4, 600,  
         TituloPropiedad.new("Calle Ángel Ganivet", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_casilla(5, 0, TipoCasilla::JUEZ)
-      @casillas<< Casilla.crear_calle(6, 600, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(5, 0, TipoCasilla::JUEZ)
+      @casillas<< Calle.new(6, 600,  
         TituloPropiedad.new("Calle Cuesta Gomerez", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_casilla(7, 0, TipoCasilla::SORPRESA)
-      @casillas<< Casilla.crear_calle(8, 600, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(7, 0, TipoCasilla::SORPRESA)
+      @casillas<< Calle.new(8, 600,  
         TituloPropiedad.new("Calle Pedro Antonio", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_calle(9, 600, TipoCasilla::CALLE, 
+      @casillas<< Calle.new(9, 600,  
         TituloPropiedad.new("Calle Reyes Católicos", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_casilla(10, 0, TipoCasilla::PARKING)
-      @casillas<< Casilla.crear_calle(11, 600, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(10, 0, TipoCasilla::PARKING)
+      @casillas<< Calle.new(11, 600,  
         TituloPropiedad.new("Calle Gran Vía", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_casilla(12, 0, TipoCasilla::SORPRESA)
-      @casillas<< Casilla.crear_calle(13, 600, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(12, 0, TipoCasilla::SORPRESA)
+      @casillas<< Calle.new(13, 600,  
         TituloPropiedad.new("Calle Camino de Ronda", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_calle(14, 600, TipoCasilla::CALLE, 
+      @casillas<< Calle.new(14, 600,  
         TituloPropiedad.new("Calle Elvira", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_casilla(15, 0, TipoCasilla::CARCEL)
-      @casillas<< Casilla.crear_calle(16, 600, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(15, 0, TipoCasilla::CARCEL)
+      @casillas<< Calle.new(16, 600,  
         TituloPropiedad.new("Calle Fuente Nueva", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_casilla(17, 0, TipoCasilla::SORPRESA)
-      @casillas<< Casilla.crear_calle(18, 600, TipoCasilla::CALLE, 
+      @casillas<< Casilla.new(17, 0, TipoCasilla::SORPRESA)
+      @casillas<< Calle.new(18, 600,  
         TituloPropiedad.new("Calle Carrera del Darro", 55, 0.6, 200, 300))
-      @casillas<< Casilla.crear_calle(19, 600, TipoCasilla::CALLE, 
+      @casillas<< Calle.new(19, 600,  
         TituloPropiedad.new("Calle Recogidas", 55, 0.6, 200, 300))
       
       @carcel = @casillas[15]

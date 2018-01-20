@@ -126,11 +126,11 @@ public class Qytetet {
         boolean puedoEdificar = false;
         boolean sePuedeEdificar = false;
         if (casilla.soyEdificable()) {
-            sePuedeEdificar = casilla.sePuedeEdificarCasa(jugadorActual.factorEspeculador);
+            sePuedeEdificar = ((Calle)casilla).sePuedeEdificarCasa(jugadorActual.getFactorEspeculador());
             if (sePuedeEdificar) {
                 puedoEdificar = jugadorActual.puedoEdificar(casilla);
                 if (puedoEdificar) {
-                    jugadorActual.modificarSaldo(-casilla.edificarCasa());
+                    jugadorActual.modificarSaldo(-((Calle)casilla).edificarCasa());
                 }
             }
         }
@@ -141,11 +141,11 @@ public class Qytetet {
         boolean puedoEdificar = false;
         boolean sePuedeEdificar = false;
         if (casilla.soyEdificable()) {
-            sePuedeEdificar = casilla.sePuedeEdificarHotel(jugadorActual.factorEspeculador);
+            sePuedeEdificar = ((Calle)casilla).sePuedeEdificarHotel(jugadorActual.getFactorEspeculador());
             if (sePuedeEdificar) {
                 puedoEdificar = jugadorActual.puedoEdificar(casilla);
                 if (puedoEdificar) {
-                    jugadorActual.modificarSaldo(-casilla.edificarHotel());
+                    jugadorActual.modificarSaldo(-((Calle)casilla).edificarHotel());
                 }
             }
         }
@@ -155,10 +155,10 @@ public class Qytetet {
 
     public boolean hipotecarPropiedad(Casilla casilla) {
         boolean puedoHipotecar = false;
-        if (casilla.soyEdificable() && !casilla.estaHipotecada()) {
+        if (((Calle)casilla).soyEdificable() && !((Calle)casilla).estaHipotecada()) {
             puedoHipotecar = jugadorActual.puedoHipotecar(casilla);
             if (puedoHipotecar) {
-                jugadorActual.modificarSaldo(casilla.hipotecar());
+                jugadorActual.modificarSaldo(((Calle)casilla).hipotecar());
             }
         }
         return puedoHipotecar;
@@ -166,10 +166,10 @@ public class Qytetet {
 
     public boolean cancelarHipoteca(Casilla casilla) {
         boolean puedoCancelar = false;
-        if (casilla.estaHipotecada()) {
+        if (((Calle)casilla).estaHipotecada()) {
             puedoCancelar = jugadorActual.puedoHipotecar(casilla);
             if (puedoCancelar) {
-                jugadorActual.modificarSaldo(-casilla.cancelarHipoteca());
+                jugadorActual.modificarSaldo(-((Calle)casilla).cancelarHipoteca());
             }
         }
         return puedoCancelar;
@@ -216,7 +216,9 @@ public class Qytetet {
                     }
                     break;
                 case CONVERTIRME:
+                    int index = jugadores.indexOf(jugadorActual);
                     jugadorActual = jugadorActual.convertirme(valor);
+                    jugadores.set(index, jugadorActual);
                     break;
                 default:
                     break;

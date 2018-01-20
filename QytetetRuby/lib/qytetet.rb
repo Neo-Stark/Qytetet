@@ -2,9 +2,9 @@
 
 module ModeloQytetet
   require 'singleton'
-  require_relative 'tablero'
-  require_relative 'jugador'
-  require_relative 'dado'
+  #  require_relative 'tablero'
+  #  require_relative 'jugador'
+  #  require_relative 'dado'
   class Qytetet
     include Singleton
     MAX_JUGADORES = 4
@@ -41,6 +41,10 @@ module ModeloQytetet
           j.modificar_saldo(@carta_actual.valor)
           @jugador_actual.modificar_saldo(-@carta_actual.valor)
         end
+      when TipoSorpresa::CONVERTIRME
+        @jugador_actual = 
+          @jugadores[@jugadores.find_index(@jugador_actual)] =
+          @jugador_actual.convertirme(@carta_actual.valor)
       end
 
       if @carta_actual.tipo == TipoSorpresa::SALIRCARCEL
@@ -49,7 +53,7 @@ module ModeloQytetet
         @mazo << @carta_actual
       end
       #EXAMEN-INICIO
-      if @carta_actual.tipo TipoSorpresa::LOTERIA
+      if @carta_actual.tipo == TipoSorpresa::LOTERIA
         @jugador_actual.carta_loteria = @carta_actual
       else
         @mazo << @carta_actual
@@ -70,7 +74,8 @@ module ModeloQytetet
 
     def edificar_casa(casilla)
       puedo_edificar = false
-      if casilla.soy_edificable && casilla.se_puede_edificar_casa
+      if casilla.soy_edificable && 
+          casilla.se_puede_edificar_casa(@jugador_actual.factor_especulador)
         puedo_edificar = @jugador_actual.puedo_edificar_casa(casilla)
         if puedo_edificar
           coste_edificar_casa = casilla.edificar_casa
@@ -82,7 +87,8 @@ module ModeloQytetet
 
     def edificar_hotel(casilla)
       puedo_edificar = false
-      if casilla.soy_edificable && casilla.se_puede_edificar_hotel
+      if casilla.soy_edificable && 
+          casilla.se_puede_edificar_hotel(@jugador_actual.factor_especulador)
         puedo_edificar = @jugador_actual.puedo_edificar_hotel(casilla)
         if puedo_edificar
           coste_edificar_hotel = casilla.edificar_hotel
@@ -93,9 +99,12 @@ module ModeloQytetet
     end
 
     def hipotecar_propiedad(casilla)
-      return if casilla.soy_edificable && !casilla.esta_hipotecada &&
-        @jugador_actual.puedo_hipotecar(casilla)
-      @jugador_actual.modificar_saldo(casilla.hipotecar)
+      hipotecada = @jugador_actual.puedo_hipotecar(casilla)
+      if(casilla.soy_edificable && !casilla.esta_hipotecada &&
+            hipotecada)
+        @jugador_actual.modificar_saldo(casilla.hipotecar)
+      end
+      hipotecada
     end
 
     def intentar_salir_carcel(metodo)
@@ -113,7 +122,7 @@ module ModeloQytetet
     def jugar
       valor_dado        = @dado.tirar
       casilla_posicion  = @jugador_actual.casilla_actual
-      nueva_casilla     = @tablero.obtener_nueva_casilla(casilla_posicion, 2)
+      nueva_casilla     = @tablero.obtener_nueva_casilla(casilla_posicion, 7)
       tengo_propietario = @jugador_actual.actualizar_posicion(nueva_casilla)
 
       if !nueva_casilla.soy_edificable
@@ -167,6 +176,7 @@ module ModeloQytetet
     end
 
     def inicializar_cartas_sorpresa
+      @mazo<< Sorpresa.new("Te ha llegado un sobre con una tarjeta negra, eres un nuevo especulador", 3000, TipoSorpresa::CONVERTIRME)
       @mazo<< Sorpresa.new("Se han limpiado tus delitos de la base de datos de la policia. Sales de la cárcel", 0, TipoSorpresa::SALIRCARCEL)
       @mazo<< Sorpresa.new("Te hemos pillado hackeando los servidores de la UGR, vas directamente a la carcel",
         @tablero.carcel.numero_casilla, TipoSorpresa::IRACASILLA )
@@ -183,7 +193,6 @@ module ModeloQytetet
       @mazo<< Sorpresa.new("Tienes ganas de salir de fiesta, vas a Pedro Antonio", 8, TipoSorpresa::IRACASILLA)
       @mazo<< Sorpresa.new("Anoche te pasaste con la juerga, te has dejado 750 en una noche", 750, TipoSorpresa::PAGARCOBRAR)
       @mazo<< Sorpresa.new("Te ha tocado la lotería, disfruta de Coco Bomgo", 1000000, TipoSorpresa::LOTERIA)
-      @mazo<< Sorpresa.new("Te ha llegado un sobre con una tarjeta negra, eres un nuevo especulador", 3000, TipoSorpresa::CONVERTIRME)
       @mazo<< Sorpresa.new("Bonita cuenta en Suiza, ahora eres un especulador", 5000, TipoSorpresa::CONVERTIRME)
     end
 
