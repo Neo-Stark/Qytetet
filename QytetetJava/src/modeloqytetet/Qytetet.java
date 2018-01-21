@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import GUIQytetet.Dado;
 
 public class Qytetet {
 
@@ -29,7 +30,7 @@ public class Qytetet {
         this.PRECIO_LIBERTAD = 200;
         this.mazo = new ArrayList();
         this.jugadores = new ArrayList();
-        dado = Dado.getInstancia();
+        dado = GUIQytetet.Dado.getInstance();
         cartaActual = null;
         valorDado = 0;
     }
@@ -245,7 +246,7 @@ public class Qytetet {
     public boolean intentarSalirCarcel(MetodoSalirCarcel metodo) {
         boolean libre = false;
         if (metodo == MetodoSalirCarcel.TIRANDODADO) {
-            valorDado = dado.tirar();
+            valorDado = dado.nextNumber();
             libre = valorDado > 4;
         } else if (metodo == MetodoSalirCarcel.PAGANDOLIBERTAD) {
             libre = jugadorActual.pagarLibertad(PRECIO_LIBERTAD);
@@ -258,9 +259,9 @@ public class Qytetet {
 
     public boolean jugar() {
         boolean tienePropietario = false;
-        valorDado = dado.tirar();
+        valorDado = dado.nextNumber();
         Casilla casillaPosicion = jugadorActual.getCasillaActual();
-        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, 7);
+        Casilla nuevaCasilla = tablero.obtenerNuevaCasilla(casillaPosicion, valorDado);
         tienePropietario = jugadorActual.actualizarPosicion(nuevaCasilla);
 
         if (!nuevaCasilla.soyEdificable()) {
