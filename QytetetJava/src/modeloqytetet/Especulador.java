@@ -11,41 +11,45 @@ package modeloqytetet;
  */
 public class Especulador extends Jugador {
 
-    private int fianza;
+   private int fianza;
 
-    protected Especulador(Jugador jugador, int fianza) {
-        super(jugador);
-        this.fianza = fianza;
-        factorEspeculador = 2;
-    }
+   protected Especulador(Jugador jugador, int fianza) {
+      super(jugador);
+      this.fianza = fianza;
+      factorEspeculador = 2;
+   }
 
-    @Override
-    protected void pagarImpuestos(int cantidad) {
-        super.pagarImpuestos(cantidad/2);
-    }
+   @Override
+   protected void pagarImpuestos(int cantidad) {
+      super.pagarImpuestos(cantidad / 2);
+   }
 
-    @Override
-    protected void irACarcel(Casilla casilla) {
-        if(!pagarFianza(fianza))
-            super.irACarcel(casilla);
-    }
+   @Override
+   protected void irACarcel(Casilla casilla) {
+      if (!pagarFianza(fianza)) {
+         super.irACarcel(casilla);
+      }
+   }
 
-    @Override
-    protected Especulador convertirme(int fianza) {
-        return this;
-    }
+   @Override
+   protected Especulador convertirme(int fianza) {
+      return this;
+   }
 
-    private boolean pagarFianza(int cantidad) {
-                return pagarLibertad(cantidad);
-    }
-    
-    @Override
-    public String toString(){
-        return super.toString() + " (Especulador)";
-    }
-    
-    @Override
-    public int getFactorEspeculador(){
-        return factorEspeculador;
-    }
+   private boolean pagarFianza(int cantidad) {
+      return pagarLibertad(cantidad);
+   }
+
+   @Override
+   public String toString() {
+      return "Nombre: " + this.getNombre() + " (Especulador)"
+          + "\nEncarcelado: " + isEncarcelado()
+          + "\nSaldo actual: " + getSaldo()
+          + "\n\n\tPropiedades obtenidas\n" + getPropiedades().toString();
+   }
+
+   @Override
+   public int getFactorEspeculador() {
+      return factorEspeculador;
+   }
 }

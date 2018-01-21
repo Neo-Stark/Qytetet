@@ -140,12 +140,10 @@ public class Calle extends Casilla {
     @Override
     public String toString() {
         String s = super.toString();
-        s += "\n\tcoste=" + coste
-                + "\n\tnumHoteles=" + numHoteles
-                + "\n\tnumCasas=" + numCasas
+        s += "\nCoste=" + coste
                 + "\n\t" + titulo;
         if (titulo.tengoPropietario()) {
-            s += "\n\tPropietario: " + titulo.getPropietario();
+            s += "\n\tPropietario: " + titulo.getPropietario().getNombre();
         } else {
             s += "\n\tNo tiene propietario";
         }

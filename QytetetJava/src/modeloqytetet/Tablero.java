@@ -68,7 +68,7 @@ public class Tablero {
     }
 
     boolean esCasillaCarcel(int numeroCasilla) {
-        return (numeroCasilla == this.carcel.getNumeroCasilla());
+        return (numeroCasilla == carcel.getNumeroCasilla());
     }
 
     @Override

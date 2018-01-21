@@ -24,30 +24,32 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jbCarcelPagando" max="32767" attributes="0"/>
-                  <Component id="jbCarcelDado" max="32767" attributes="0"/>
-              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jbGestionInmobiliaria" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jbCarcelDado" min="-2" pref="128" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jbCarcelPagando" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <Component id="jbJugar" min="-2" pref="101" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jbGestionInmobiliaria" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jbAplicarSorpresa" linkSize="3" min="-2" pref="124" max="-2" attributes="0"/>
                   <Component id="jbPasaTurno" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jbComprar" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="18" max="32767" attributes="0"/>
+              <EmptySpace min="18" pref="28" max="32767" attributes="0"/>
           </Group>
-          <Component id="vistaQytetet" alignment="0" pref="0" max="32767" attributes="0"/>
+          <Component id="vistaQytetet" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -58,9 +60,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jbAplicarSorpresa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                      <Component id="jbPasaTurno" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbPasaTurno" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jbComprar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbGestionInmobiliaria" alignment="3" max="32767" attributes="0"/>
@@ -88,11 +90,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Salir Carcel Dado"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbCarcelDadoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbComprar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Comprar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbComprarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbCarcelPagando">
       <Properties>
